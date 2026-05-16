@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Vergaderingen</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,sans-serif;font-size:15px;background:#f5f5f5;color:#1a1a1a;min-height:100vh}
+.app{max-width:680px;margin:0 auto;background:#fff;min-height:100vh;padding-bottom:80px;box-shadow:0 0 0 0.5px #ddd}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 16px 10px;border-bottom:0.5px solid #e5e5e5}
+.topbar-title{font-size:17px;font-weight:500}
+.page{display:none;padding:12px 16px}
+.page.active{display:block}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border:0.5px solid #ccc;border-radius:8px;background:transparent;color:#1a1a1a;font-size:14px;cursor:pointer;font-family:inherit;min-height:44px}
+.btn:hover{background:#f5f5f5}
+.btn-primary{border-color:#185FA5;color:#185FA5}
+.btn-danger{border-color:#A32D2D;color:#A32D2D}
+.btn-success{border-color:#3B6D11;color:#3B6D11}
+.btn-full{width:100%;justify-content:center}
+.card{background:#fff;border:0.5px solid #e5e5e5;border-radius:12px;padding:14px 16px;margin-bottom:10px}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:12px;color:#666;margin-bottom:5px}
+.field input,.field select,.field textarea{width:100%;padding:10px 12px;border:0.5px solid #e5e5e5;border-radius:8px;font-size:14px;font-family:inherit;background:#fff;color:#1a1a1a;min-height:44px}
+.field textarea{min-height:80px;resize:vertical}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.chip{display:inline-flex;align-items:center;gap:5px;background:#f5f5f5;border:0.5px solid #e5e5e5;border-radius:20px;padding:5px 10px;font-size:13px;color:#666}
+.chip button{background:none;border:none;cursor:pointer;color:#666;font-size:14px;line-height:1;padding:0}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.badge{font-size:11px;padding:2px 8px;border-radius:20px;font-weight:500;white-space:nowrap}
+.badge-blue{background:#E6F1FB;color:#0C447C}
+.badge-teal{background:#E1F5EE;color:#085041}
+.badge-purple{background:#EEEDFE;color:#3C3489}
+.badge-amber{background:#FAEEDA;color:#633806}
+.badge-gray{background:#f5f5f5;color:#666}
+.badge-green{background:#EAF3DE;color:#27500A}
+.meeting-row{display:flex;align-items:flex-start;gap:12px}
+.meeting-icon{width:42px;height:42px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.mi-blue{background:#E6F1FB;color:#185FA5}
+.mi-teal{background:#E1F5EE;color:#0F6E56}
+.mi-purple{background:#EEEDFE;color:#534AB7}
+.mi-amber{background:#FAEEDA;color:#854F0B}
+.meeting-info{flex:1;min-width:0}
+.meeting-title{font-size:15px;font-weight:500;margin-bottom:3px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.meeting-meta{font-size:12px;color:#666;display:flex;flex-wrap:wrap;gap:8px}
+.meeting-meta span{display:flex;align-items:center;gap:3px}
+.actions{display:flex;gap:4px;flex-shrink:0}
+.icon-btn{width:36px;height:36px;border:0.5px solid #e5e5e5;border-radius:8px;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#666;font-size:15px}
+.icon-btn:hover{background:#f5f5f5}
+.section-label{font-size:11px;font-weight:500;color:#666;letter-spacing:.06em;text-transform:uppercase;margin:16px 0 8px}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.stat{background:#f5f5f5;border-radius:8px;padding:12px;text-align:center}
+.stat-n{font-size:22px;font-weight:500}
+.stat-l{font-size:11px;color:#666;margin-top:2px}
+.divider{border:none;border-top:0.5px solid #e5e5e5;margin:12px 0}
+.empty{text-align:center;padding:24px 16px;color:#666;font-size:14px}
+.verslag-edit{width:100%;min-height:200px;padding:10px;border:0.5px solid #e5e5e5;border-radius:8px;font-size:14px;font-family:inherit;background:#fff;color:#1a1a1a;resize:vertical;line-height:1.6}
+.cal-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:2px}
+.cal-day-label{text-align:center;font-size:11px;color:#666;padding:4px 0}
+.cal-cell{min-height:38px;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:8px;cursor:pointer;font-size:13px;position:relative}
+.cal-cell:hover{background:#f5f5f5}
+.cal-today{background:#E6F1FB;color:#0C447C;font-weight:500}
+.cal-selected{background:#185FA5;color:#fff;font-weight:500}
+.cal-dot{width:4px;height:4px;border-radius:50%;background:#185FA5;margin-top:1px}
+.cal-dot-sel{background:#fff}
+.tabs-bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:680px;display:flex;border-top:0.5px solid #e5e5e5;background:#fff;padding:4px 0 2px;z-index:100}
+.tab-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 4px;border:none;background:transparent;cursor:pointer;color:#666;font-size:10px;font-family:inherit;min-height:52px}
+.tab-btn i{font-size:20px}
+.tab-btn.active{color:#185FA5}
+.modal-wrap{background:rgba(0,0,0,.45);border-radius:12px;padding:12px;margin-bottom:12px;display:none}
+.modal-wrap.open{display:block}
+.modal-inner{background:#fff;border-radius:12px;padding:16px}
+.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.modal-head span{font-size:16px;font-weight:500}
+.invite-block{background:#f5f5f5;border-radius:8px;padding:10px 12px;margin-bottom:8px;font-size:13px;line-height:1.5;color:#555;white-space:pre-wrap;word-break:break-word}
+.progress-bar{height:4px;background:#f5f5f5;border-radius:2px;overflow:hidden;margin:6px 0}
+.progress-fill{height:100%;background:#185FA5;border-radius:2px;transition:width .4s}
+.rec-bar{height:4px;border-radius:2px;background:#f5f5f5;margin:8px 0}
+.rec-fill{height:100%;border-radius:2px;background:#E24B4A;transition:width .3s}
+@media(prefers-color-scheme:dark){
+  body{background:#1a1a1a;color:#f0f0f0}
+  .app{background:#1a1a1a;box-shadow:none}
+  .card,.modal-inner{background:#242424;border-color:#333}
+  .topbar,.tabs-bottom{background:#1a1a1a;border-color:#333}
+  .field input,.field select,.field textarea,.verslag-edit{background:#242424;color:#f0f0f0;border-color:#333}
+  .stat,.invite-block{background:#2a2a2a;color:#aaa}
+  .icon-btn{border-color:#333;color:#aaa}
+  .icon-btn:hover,.btn:hover,.cal-cell:hover{background:#2a2a2a}
+  .chip{background:#2a2a2a;border-color:#333;color:#aaa}
+  .empty{color:#aaa}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="topbar">
+    <span class="topbar-title" id="pageTitle"><i class="ti ti-calendar-event" style="font-size:18px;vertical-align:-2px;margin-right:6px"></i>Vergaderingen</span>
+    <button class="btn btn-primary" onclick="openForm()" id="topAddBtn" style="padding:8px 12px;min-height:36px"><i class="ti ti-plus"></i> Nieuw</button>
+  </div>
+ 
+  <div id="formModal" class="modal-wrap">
+    <div class="modal-inner">
+      <div class="modal-head"><span id="formModalTitle">Nieuwe vergadering</span><button class="icon-btn" onclick="closeForm()"><i class="ti ti-x"></i></button></div>
+      <div class="field"><label>Onderwerp *</label><input id="fTitel" type="text" placeholder="Vergaderonderwerp"></div>
+      <div class="field-row">
+        <div class="field"><label>Type</label><select id="fType"><option value="intern">Intern</option><option value="klant">Klant</option><option value="online">Online</option><option value="kickoff">Kickoff</option></select></div>
+        <div class="field"><label>Status</label><select id="fStatus"><option value="gepland">Gepland</option><option value="bezig">Bezig</option><option value="afgelopen">Afgelopen</option><option value="geannuleerd">Geannuleerd</option></select></div>
+      </div>
+      <div class="field"><label>Datum *</label><input id="fDatum" type="date"></div>
+      <div class="field-row">
+        <div class="field"><label>Starttijd</label><input id="fStart" type="time" value="09:00"></div>
+        <div class="field"><label>Eindtijd</label><input id="fEinde" type="time" value="10:00"></div>
+      </div>
+      <div class="field"><label>Locatie</label><input id="fLocatie" type="text" placeholder="Zaal, adres of vergaderlink"></div>
+      <div class="field"><label>Organisator</label><input id="fOrg" type="text" placeholder="Naam organisator"></div>
+      <div class="field"><label>Deelnemers (naam + Enter)</label><input id="fDeelInput" type="text" placeholder="Naam deelnemer..." onkeydown="addDeelnemer(event)"><div class="chips" id="fDeelChips"></div></div>
+      <div class="field"><label>E-mails (kommagescheiden)</label><input id="fEmails" type="text" placeholder="a@b.be, c@d.be"></div>
+      <div class="field"><label>Agenda (één punt per regel)</label><textarea id="fAgenda" placeholder="Bespreek Q3&#10;Planning Q4&#10;Rondvraag"></textarea></div>
+      <div class="field"><label>Notities</label><textarea id="fNotities" placeholder="Extra informatie..."></textarea></div>
+      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:4px">
+        <button class="btn" onclick="closeForm()">Annuleren</button>
+        <button class="btn btn-primary" onclick="slaVergaderingOp()"><i class="ti ti-check"></i> Opslaan</button>
+      </div>
+    </div>
+  </div>
+ 
+  <div id="page-overzicht" class="page active">
+    <div class="stat-grid" id="statsGrid"></div>
+    <div class="section-label">Aankomend</div><div id="lijstAankomend"></div>
+    <div class="section-label">Afgelopen</div><div id="lijstAfgelopen"></div>
+  </div>
+ 
+  <div id="page-opname" class="page">
+    <div class="section-label">Selecteer vergadering</div>
+    <div class="field"><select id="opnameVerg" onchange="laadOpnameVerg()"><option value="">— kies vergadering —</option></select></div>
+    <div class="card" id="opnameCard" style="display:none">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <span id="opnameVergNaam" style="font-weight:500"></span>
+        <span class="badge badge-gray" id="opnameDatum"></span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <div style="width:12px;height:12px;border-radius:50%;background:#E24B4A;display:none" id="recDot"></div>
+        <span id="recTimer" style="font-size:22px;font-weight:500;font-variant-numeric:tabular-nums">00:00</span>
+        <span id="recStatus" style="font-size:13px;color:#666">Klaar om op te nemen</span>
+      </div>
+      <div class="rec-bar"><div class="rec-fill" id="recFill" style="width:0%"></div></div>
+      <div style="display:flex;gap:8px;margin-top:10px">
+        <button class="btn btn-success btn-full" id="btnStart" onclick="startOpname()"><i class="ti ti-player-record"></i> Start opname</button>
+        <button class="btn btn-danger" id="btnStop" onclick="stopOpname()" style="display:none"><i class="ti ti-player-stop"></i> Stop</button>
+      </div>
+      <div id="opnameResultaat" style="display:none;margin-top:12px">
+        <div class="divider"></div>
+        <div class="section-label">Opname klaar</div>
+        <button class="btn btn-primary" onclick="downloadOpname()"><i class="ti ti-download"></i> Download opname</button>
+        <div class="divider"></div>
+        <div class="section-label">Verslag genereren</div>
+        <div class="field"><label>Plak transcript hier</label><textarea id="transcriptInput" placeholder="Plak hier de tekst van de vergadering..."></textarea></div>
+        <button class="btn btn-primary btn-full" onclick="genereerVerslag()"><i class="ti ti-sparkles"></i> Genereer AI-verslag</button>
+        <div id="verslagProgress" style="display:none;margin-top:8px">
+          <div class="progress-bar"><div class="progress-fill" id="verslagProgFill" style="width:30%"></div></div>
+          <div style="font-size:12px;color:#666;margin-top:4px" id="verslagProgTxt">Verslag wordt gegenereerd...</div>
+        </div>
+        <div id="verslagContainer" style="display:none;margin-top:12px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+            <span class="section-label" style="margin:0">Verslag (bewerkbaar)</span>
+            <div style="display:flex;gap:6px">
+              <button class="icon-btn" onclick="kopieerVerslag()" title="Kopieer"><i class="ti ti-copy"></i></button>
+              <button class="icon-btn" onclick="exporteerVerslag()" title="Export .txt"><i class="ti ti-download"></i></button>
+            </div>
+          </div>
+          <textarea class="verslag-edit" id="verslagEdit" oninput="autoSaveVerslag()"></textarea>
+          <div style="font-size:11px;color:#666;margin-top:4px" id="verslagSaveInfo"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+  <div id="page-uitnodiging" class="page">
+    <div class="section-label">Selecteer vergadering</div>
+    <div class="field"><select id="uitnVerg" onchange="laadUitnVerg()"><option value="">— kies vergadering —</option></select></div>
+    <div id="uitnContent" style="display:none">
+      <div class="card">
+        <div style="font-weight:500;margin-bottom:10px" id="uitnTitel"></div>
+        <div class="invite-block" id="uitnPreview"></div>
+        <div class="divider"></div>
+        <div class="section-label">Verstuur naar iedereen</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn btn-primary" onclick="stuurMailAllen()"><i class="ti ti-mail"></i> E-mail allen</button>
+          <button class="btn btn-success" onclick="stuurWAAllen()"><i class="ti ti-brand-whatsapp"></i> WhatsApp allen</button>
+        </div>
+        <div class="divider"></div>
+        <div class="section-label">Per deelnemer</div>
+        <div id="uitnDeelnemers"></div>
+      </div>
+    </div>
+  </div>
+ 
+  <div id="page-kalender" class="page">
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <button class="icon-btn" onclick="prevMaand()"><i class="ti ti-chevron-left"></i></button>
+        <span id="calLabel" style="font-size:15px;font-weight:500"></span>
+        <button class="icon-btn" onclick="nextMaand()"><i class="ti ti-chevron-right"></i></button>
+      </div>
+      <div class="cal-grid" style="margin-bottom:6px">
+        <div class="cal-day-label">Ma</div><div class="cal-day-label">Di</div><div class="cal-day-label">Wo</div><div class="cal-day-label">Do</div><div class="cal-day-label">Vr</div><div class="cal-day-label">Za</div><div class="cal-day-label">Zo</div>
+      </div>
+      <div class="cal-grid" id="calGrid"></div>
+    </div>
+    <div id="calDagVerg"></div>
+  </div>
+ 
+  <div id="page-instellingen" class="page">
+    <div class="card">
+      <div style="font-weight:500;margin-bottom:12px">Organisatie</div>
+      <div class="field"><label>Naam organisatie</label><input id="settOrg" type="text" placeholder="Mijn bedrijf" oninput="slaSettingsOp()"></div>
+      <div class="field"><label>Standaard organisator</label><input id="settOrganisator" type="text" placeholder="Naam" oninput="slaSettingsOp()"></div>
+    </div>
+    <div class="card">
+      <div style="font-weight:500;margin-bottom:10px">Data exporteren / importeren</div>
+      <div style="font-size:13px;color:#666;margin-bottom:10px;line-height:1.5">Exporteer je vergaderingen als JSON en stuur door naar collega's of importeer op een ander toestel.</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <button class="btn btn-primary btn-full" onclick="exportData()"><i class="ti ti-download"></i> Exporteer alle vergaderingen (JSON)</button>
+        <label class="btn btn-full" style="cursor:pointer"><i class="ti ti-upload"></i> Importeer vergaderingen (JSON)<input type="file" accept=".json" style="display:none" onchange="importData(event)"></label>
+        <button class="btn btn-danger btn-full" onclick="resetApp()"><i class="ti ti-trash"></i> Reset app</button>
+      </div>
+    </div>
+  </div>
+ 
+  <div class="tabs-bottom">
+    <button class="tab-btn active" onclick="toonPagina('overzicht',this)"><i class="ti ti-layout-list"></i><span>Overzicht</span></button>
+    <button class="tab-btn" onclick="toonPagina('opname',this)"><i class="ti ti-microphone"></i><span>Opname</span></button>
+    <button class="tab-btn" onclick="toonPagina('uitnodiging',this)"><i class="ti ti-send"></i><span>Uitnodiging</span></button>
+    <button class="tab-btn" onclick="toonPagina('kalender',this)"><i class="ti ti-calendar"></i><span>Kalender</span></button>
+    <button class="tab-btn" onclick="toonPagina('instellingen',this)"><i class="ti ti-settings"></i><span>Instellingen</span></button>
+  </div>
+</div>
+<script>
+const STORE='verg_app_v1';
+let db=laadDb(),editId=null,tempDeeln=[],mediaRec=null,audioChunks=[],recInterval=null,recSecs=0,audioBlob=null,calJaar,calMaand,calGeselecteerd=null;
+const nu=new Date();calJaar=nu.getFullYear();calMaand=nu.getMonth();
+function laadDb(){try{const d=localStorage.getItem(STORE);if(d)return JSON.parse(d);}catch(e){}return{vergaderingen:[],instellingen:{organisatie:'',organisator:''},versie:'1.0'};}
+function slaOp(){localStorage.setItem(STORE,JSON.stringify(db));}
+function vandaag(){return new Date().toISOString().split('T')[0];}
+function fmtDatum(d){if(!d)return'';const[y,m,dd]=d.split('-');const mn=['jan','feb','mrt','apr','mei','jun','jul','aug','sep','okt','nov','dec'];return parseInt(dd)+' '+mn[parseInt(m)-1]+' '+y;}
+function duur(s,e){if(!s||!e)return'';const[sh,sm]=s.split(':').map(Number);const[eh,em]=e.split(':').map(Number);const m=(eh*60+em)-(sh*60+sm);if(m<=0)return'';return m>=60?Math.floor(m/60)+'u'+(m%60?m%60+'m':''):m+'m';}
+function typeInfo(t){const map={intern:{cls:'mi-blue',badge:'badge-blue',icon:'ti-building'},klant:{cls:'mi-teal',badge:'badge-teal',icon:'ti-users'},online:{cls:'mi-purple',badge:'badge-purple',icon:'ti-video'},kickoff:{cls:'mi-amber',badge:'badge-amber',icon:'ti-rocket'}};return map[t]||map.intern;}
+function toonPagina(naam,btn){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));document.getElementById('page-'+naam).classList.add('active');btn.classList.add('active');const titles={overzicht:'Vergaderingen',opname:'Opname & verslag',uitnodiging:'Uitnodigingen',kalender:'Kalender',instellingen:'Instellingen'};document.getElementById('pageTitle').innerHTML='<i class="ti ti-calendar-event" style="font-size:18px;vertical-align:-2px;margin-right:6px"></i>'+titles[naam];document.getElementById('topAddBtn').style.display=naam==='overzicht'?'':'none';if(naam==='overzicht')renderLijst();if(naam==='opname')vulOpnameSelect();if(naam==='uitnodiging')vulUitnSelect();if(naam==='kalender')renderKalender();if(naam==='instellingen')laadSettings();}
+function renderLijst(){const a=document.getElementById('lijstAankomend'),p=document.getElementById('lijstAfgelopen');a.innerHTML='';p.innerHTML='';const sorted=[...db.vergaderingen].sort((a,b)=>a.datum.localeCompare(b.datum)||a.start.localeCompare(b.start));const up=sorted.filter(v=>v.datum>=vandaag()),pa=sorted.filter(v=>v.datum<vandaag()).reverse();if(!up.length)a.innerHTML='<div class="empty"><i class="ti ti-calendar-off" style="font-size:24px;display:block;margin-bottom:6px"></i>Geen aankomende vergaderingen</div>';else up.forEach(v=>renderVergCard(v,a));if(!pa.length)p.innerHTML='<div class="empty" style="padding:10px;font-size:13px">Geen afgelopen vergaderingen</div>';else pa.forEach(v=>renderVergCard(v,p));renderStats();}
+function renderVergCard(v,container){const ti=typeInfo(v.type),d=document.createElement('div');d.className='card';d.innerHTML='<div class="meeting-row"><div class="meeting-icon '+ti.cls+'"><i class="ti '+ti.icon+'"></i></div><div class="meeting-info"><div class="meeting-title">'+v.titel+'<span class="badge '+ti.badge+'">'+v.type+'</span>'+(v.verslag?'<span class="badge badge-green"><i class="ti ti-file-text" style="font-size:10px"></i> verslag</span>':'')+'</div><div class="meeting-meta"><span><i class="ti ti-calendar"></i>'+fmtDatum(v.datum)+'</span><span><i class="ti ti-clock"></i>'+v.start+'-'+v.einde+'</span>'+(v.locatie?'<span><i class="ti ti-map-pin"></i>'+v.locatie+'</span>':'')+(v.deelnemers.length?'<span><i class="ti ti-users"></i>'+v.deelnemers.length+'</span>':'')+'</div></div><div class="actions"><button class="icon-btn" onclick="bewerkVerg('+v.id+')"><i class="ti ti-edit"></i></button><button class="icon-btn" onclick="verwijderVerg('+v.id+')"><i class="ti ti-trash"></i></button></div></div>';container.appendChild(d);}
+function renderStats(){const g=document.getElementById('statsGrid'),up=db.vergaderingen.filter(v=>v.datum>=vandaag()).length,metV=db.vergaderingen.filter(v=>v.verslag).length;g.innerHTML='<div class="stat"><div class="stat-n">'+db.vergaderingen.length+'</div><div class="stat-l">Totaal</div></div><div class="stat"><div class="stat-n">'+up+'</div><div class="stat-l">Aankomend</div></div><div class="stat"><div class="stat-n">'+metV+'</div><div class="stat-l">Met verslag</div></div><div class="stat"><div class="stat-n">'+db.vergaderingen.filter(v=>v.status==='geannuleerd').length+'</div><div class="stat-l">Geannuleerd</div></div>';}
+function openForm(){editId=null;tempDeeln=[];document.getElementById('formModalTitle').textContent='Nieuwe vergadering';['fTitel','fLocatie','fOrg','fAgenda','fNotities','fEmails'].forEach(id=>document.getElementById(id).value='');document.getElementById('fDatum').value='';document.getElementById('fStart').value='09:00';document.getElementById('fEinde').value='10:00';document.getElementById('fType').value='intern';document.getElementById('fStatus').value='gepland';renderDeelChips();document.getElementById('formModal').classList.add('open');window.scrollTo(0,0);}
+function closeForm(){document.getElementById('formModal').classList.remove('open');}
+function bewerkVerg(id){const v=db.vergaderingen.find(x=>x.id===id);if(!v)return;editId=id;tempDeeln=[...v.deelnemers];document.getElementById('formModalTitle').textContent='Vergadering bewerken';document.getElementById('fTitel').value=v.titel;document.getElementById('fDatum').value=v.datum;document.getElementById('fStart').value=v.start;document.getElementById('fEinde').value=v.einde;document.getElementById('fLocatie').value=v.locatie;document.getElementById('fOrg').value=v.organisator;document.getElementById('fAgenda').value=v.agenda;document.getElementById('fNotities').value=v.notities;document.getElementById('fType').value=v.type;document.getElementById('fStatus').value=v.status||'gepland';document.getElementById('fEmails').value=v.emails||'';renderDeelChips();document.getElementById('formModal').classList.add('open');window.scrollTo(0,0);}
+function addDeelnemer(e){if(e.key==='Enter'){e.preventDefault();const v=e.target.value.trim();if(v&&!tempDeeln.includes(v)){tempDeeln.push(v);renderDeelChips();}e.target.value='';}}
+function renderDeelChips(){document.getElementById('fDeelChips').innerHTML=tempDeeln.map(n=>'<span class="chip">'+n+'<button onclick="verwijderDeeln(\''+n+'\')">x</button></span>').join('');}
+function verwijderDeeln(n){tempDeeln=tempDeeln.filter(x=>x!==n);renderDeelChips();}
+function slaVergaderingOp(){const titel=document.getElementById('fTitel').value.trim(),datum=document.getElementById('fDatum').value;if(!titel||!datum){alert('Vul onderwerp en datum in.');return;}const bestaand=editId?db.vergaderingen.find(x=>x.id===editId):null;const v={id:editId||(Date.now()),titel,datum,type:document.getElementById('fType').value,status:document.getElementById('fStatus').value,start:document.getElementById('fStart').value,einde:document.getElementById('fEinde').value,locatie:document.getElementById('fLocatie').value.trim(),organisator:document.getElementById('fOrg').value.trim(),deelnemers:[...tempDeeln],emails:document.getElementById('fEmails').value.trim(),agenda:document.getElementById('fAgenda').value.trim(),notities:document.getElementById('fNotities').value.trim(),transcript:bestaand?bestaand.transcript:'',verslag:bestaand?bestaand.verslag:''};if(editId){const i=db.vergaderingen.findIndex(x=>x.id===editId);if(i>=0)db.vergaderingen[i]=v;}else db.vergaderingen.push(v);slaOp();closeForm();renderLijst();}
+function verwijderVerg(id){if(confirm('Vergadering verwijderen?')){db.vergaderingen=db.vergaderingen.filter(x=>x.id!==id);slaOp();renderLijst();}}
+function vulOpnameSelect(){const sel=document.getElementById('opnameVerg'),huidig=sel.value;sel.innerHTML='<option value="">— kies vergadering —</option>';[...db.vergaderingen].sort((a,b)=>b.datum.localeCompare(a.datum)).forEach(v=>{sel.innerHTML+='<option value="'+v.id+'">'+fmtDatum(v.datum)+' — '+v.titel+'</option>';});if(huidig)sel.value=huidig;}
+function laadOpnameVerg(){const id=parseInt(document.getElementById('opnameVerg').value),card=document.getElementById('opnameCard');if(!id){card.style.display='none';return;}const v=db.vergaderingen.find(x=>x.id===id);if(!v){card.style.display='none';return;}card.style.display='block';document.getElementById('opnameVergNaam').textContent=v.titel;document.getElementById('opnameDatum').textContent=fmtDatum(v.datum)+' '+v.start+'-'+v.einde;const res=document.getElementById('opnameResultaat');if(v.verslag){res.style.display='block';document.getElementById('verslagContainer').style.display='block';document.getElementById('verslagEdit').value=v.verslag;}else{res.style.display='none';document.getElementById('verslagContainer').style.display='none';}}
+function startOpname(){navigator.mediaDevices.getUserMedia({audio:true}).then(stream=>{audioChunks=[];recSecs=0;mediaRec=new MediaRecorder(stream);mediaRec.ondataavailable=e=>{if(e.data.size>0)audioChunks.push(e.data);};mediaRec.onstop=()=>{audioBlob=new Blob(audioChunks,{type:'audio/webm'});document.getElementById('opnameResultaat').style.display='block';};mediaRec.start(1000);document.getElementById('btnStart').style.display='none';document.getElementById('btnStop').style.display='flex';document.getElementById('recDot').style.display='block';document.getElementById('recStatus').textContent='Opname bezig...';recInterval=setInterval(()=>{recSecs++;const m=Math.floor(recSecs/60),s=recSecs%60;document.getElementById('recTimer').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');document.getElementById('recFill').style.width=Math.min(recSecs/3600*100,100)+'%';},1000);}).catch(()=>alert('Microfoon toegang geweigerd.'));}
+function stopOpname(){if(mediaRec){mediaRec.stop();mediaRec.stream.getTracks().forEach(t=>t.stop());}clearInterval(recInterval);document.getElementById('recDot').style.display='none';document.getElementById('recStatus').textContent='Opname gestopt';document.getElementById('btnStop').style.display='none';document.getElementById('btnStart').style.display='flex';}
+function downloadOpname(){if(!audioBlob){alert('Geen opname beschikbaar.');return;}const url=URL.createObjectURL(audioBlob),a=document.createElement('a');a.href=url;a.download='opname.webm';a.click();URL.revokeObjectURL(url);}
+async function genereerVerslag(){const id=parseInt(document.getElementById('opnameVerg').value),v=db.vergaderingen.find(x=>x.id===id);if(!v){alert('Selecteer eerst een vergadering.');return;}const tekst=document.getElementById('transcriptInput').value.trim();if(!tekst){alert('Voer eerst een transcript in.');return;}const prog=document.getElementById('verslagProgress'),fill=document.getElementById('verslagProgFill'),txt=document.getElementById('verslagProgTxt');prog.style.display='block';fill.style.width='20%';txt.textContent='Verbinden met AI...';try{fill.style.width='40%';txt.textContent='Verslag wordt gegenereerd...';const resp=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:'Je bent een professionele notulist. Schrijf een gestructureerd vergaderverslag in het Nederlands.\n\nVergadering: '+v.titel+'\nDatum: '+fmtDatum(v.datum)+'\nDeelnemers: '+v.deelnemers.join(', ')+'\n\nTranscript:\n'+tekst+'\n\nMaak een verslag met: 1. SAMENVATTING 2. BESPROKEN PUNTEN 3. BESLISSINGEN 4. ACTIEPUNTEN 5. VOLGENDE STAPPEN'}]})});fill.style.width='80%';txt.textContent='Verwerken...';const data=await resp.json(),verslag=data.content&&data.content[0]?data.content[0].text:'Kon verslag niet genereren.';v.verslag=verslag;slaOp();document.getElementById('verslagEdit').value=verslag;document.getElementById('verslagContainer').style.display='block';document.getElementById('verslagSaveInfo').textContent='Automatisch opgeslagen';fill.style.width='100%';txt.textContent='Klaar!';setTimeout(()=>{prog.style.display='none';},1200);}catch(err){prog.style.display='none';alert('Fout bij genereren verslag.');}}
+function autoSaveVerslag(){const id=parseInt(document.getElementById('opnameVerg').value),v=db.vergaderingen.find(x=>x.id===id);if(!v)return;v.verslag=document.getElementById('verslagEdit').value;slaOp();document.getElementById('verslagSaveInfo').textContent='Opgeslagen '+new Date().toLocaleTimeString('nl-BE',{hour:'2-digit',minute:'2-digit'});}
+function kopieerVerslag(){navigator.clipboard.writeText(document.getElementById('verslagEdit').value).then(()=>alert('Gekopieerd!'));}
+function exporteerVerslag(){const id=parseInt(document.getElementById('opnameVerg').value),v=db.vergaderingen.find(x=>x.id===id);if(!v||!v.verslag)return;const blob=new Blob(['Verslag: '+v.titel+'\nDatum: '+fmtDatum(v.datum)+'\n\n'+v.verslag],{type:'text/plain'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='verslag_'+v.datum+'.txt';a.click();}
+function bouwUitnTekst(v){const agenda=v.agenda?v.agenda.split('\n').filter(Boolean).map((l,i)=>(i+1)+'. '+l).join('\n'):'';return'Uitnodiging vergadering: '+v.titel+'\n\nDatum: '+fmtDatum(v.datum)+'\nTijdstip: '+v.start+' - '+v.einde+'\nLocatie: '+(v.locatie||'nader te bepalen')+'\nOrganisator: '+(v.organisator||'')+'\n\nAgenda:\n'+(agenda||'zie uitnodiging')+'\n\nGraag bevestiging van aanwezigheid.\nMet vriendelijke groeten,\n'+(v.organisator||'');}
+function vulUitnSelect(){const sel=document.getElementById('uitnVerg');sel.innerHTML='<option value="">— kies vergadering —</option>';[...db.vergaderingen].sort((a,b)=>b.datum.localeCompare(a.datum)).forEach(v=>{sel.innerHTML+='<option value="'+v.id+'">'+fmtDatum(v.datum)+' — '+v.titel+'</option>';});}
+function laadUitnVerg(){const id=parseInt(document.getElementById('uitnVerg').value),cont=document.getElementById('uitnContent');if(!id){cont.style.display='none';return;}const v=db.vergaderingen.find(x=>x.id===id);if(!v){cont.style.display='none';return;}cont.style.display='block';document.getElementById('uitnTitel').textContent=v.titel+' — '+fmtDatum(v.datum);document.getElementById('uitnPreview').textContent=bouwUitnTekst(v);const dd=document.getElementById('uitnDeelnemers');if(!v.deelnemers.length){dd.innerHTML='<div style="font-size:13px;color:#666">Geen deelnemers opgegeven</div>';return;}dd.innerHTML=v.deelnemers.map((naam,i)=>{const email=(v.emails||'').split(',').map(e=>e.trim())[i]||'';return'<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:0.5px solid #e5e5e5"><span style="font-size:14px">'+naam+(email?' <span style="font-size:12px;color:#666">('+email+')</span>':'')+'</span><div style="display:flex;gap:6px">'+(email?'<button class="icon-btn" onclick="stuurMail1(\''+email+'\','+v.id+')" title="E-mail"><i class="ti ti-mail"></i></button>':'')+'<button class="icon-btn" onclick="stuurWA1(\''+naam+'\','+v.id+')" title="WhatsApp"><i class="ti ti-brand-whatsapp"></i></button></div></div>';}).join('');}
+function stuurMailAllen(){const id=parseInt(document.getElementById('uitnVerg').value),v=db.vergaderingen.find(x=>x.id===id);if(!v)return;const emails=(v.emails||'').split(',').map(e=>e.trim()).filter(Boolean).join(',');window.open('mailto:'+emails+'?subject='+encodeURIComponent('Uitnodiging: '+v.titel)+'&body='+encodeURIComponent(bouwUitnTekst(v)));}
+function stuurMail1(email,id){const v=db.vergaderingen.find(x=>x.id===id);if(!v)return;window.open('mailto:'+email+'?subject='+encodeURIComponent('Uitnodiging: '+v.titel)+'&body='+encodeURIComponent(bouwUitnTekst(v)));}
+function stuurWAAllen(){const id=parseInt(document.getElementById('uitnVerg').value),v=db.vergaderingen.find(x=>x.id===id);if(!v)return;const agenda=v.agenda?v.agenda.split('\n').filter(Boolean).map((l,i)=>(i+1)+'. '+l).join('\n'):'';window.open('https://wa.me/?text='+encodeURIComponent('*Uitnodiging: '+v.titel+'*\n\n'+fmtDatum(v.datum)+' '+v.start+'-'+v.einde+'\n'+(v.locatie||'nader te bepalen')+'\n\nAgenda:\n'+(agenda||'zie uitnodiging')+'\n\nGraag uw bevestiging.'));}
+function stuurWA1(naam,id){const v=db.vergaderingen.find(x=>x.id===id);if(!v)return;const agenda=v.agenda?v.agenda.split('\n').filter(Boolean).map((l,i)=>(i+1)+'. '+l).join('\n'):'';window.open('https://wa.me/?text='+encodeURIComponent('Hallo '+naam+',\n\n*Uitnodiging: '+v.titel+'*\n'+fmtDatum(v.datum)+' '+v.start+'-'+v.einde+'\n'+(v.locatie||'nader te bepalen')+'\n\nAgenda:\n'+(agenda||'zie uitnodiging')+'\n\nGraag uw bevestiging.'));}
+function renderKalender(){const mn=['Januari','Februari','Maart','April','Mei','Juni','Juli','Augustus','September','Oktober','November','December'];document.getElementById('calLabel').textContent=mn[calMaand]+' '+calJaar;const grid=document.getElementById('calGrid');grid.innerHTML='';const first=new Date(calJaar,calMaand,1);let startDay=first.getDay()-1;if(startDay<0)startDay=6;const days=new Date(calJaar,calMaand+1,0).getDate(),today=vandaag();for(let i=0;i<startDay;i++){const d=document.createElement('div');d.style.minHeight='38px';grid.appendChild(d);}for(let d=1;d<=days;d++){const ds=calJaar+'-'+String(calMaand+1).padStart(2,'0')+'-'+String(d).padStart(2,'0'),hasV=db.vergaderingen.some(v=>v.datum===ds),isT=ds===today,isSel=ds===calGeselecteerd,cell=document.createElement('div');cell.className='cal-cell'+(isT&&!isSel?' cal-today':'')+(isSel?' cal-selected':'');cell.innerHTML=d+(hasV?'<div class="cal-dot'+(isSel?' cal-dot-sel':'')+'"></div>':'');cell.onclick=(function(s){return function(){calGeselecteerd=s;renderKalender();toonDagVerg(s);};})(ds);grid.appendChild(cell);}if(calGeselecteerd)toonDagVerg(calGeselecteerd);}
+function toonDagVerg(ds){const cont=document.getElementById('calDagVerg');cont.innerHTML='';const vv=db.vergaderingen.filter(v=>v.datum===ds).sort((a,b)=>a.start.localeCompare(b.start));if(!vv.length){cont.innerHTML='<div class="empty" style="padding:10px">Geen vergaderingen op '+fmtDatum(ds)+'</div>';return;}vv.forEach(v=>renderVergCard(v,cont));}
+function prevMaand(){calMaand--;if(calMaand<0){calMaand=11;calJaar--;}calGeselecteerd=null;renderKalender();document.getElementById('calDagVerg').innerHTML='';}
+function nextMaand(){calMaand++;if(calMaand>11){calMaand=0;calJaar++;}calGeselecteerd=null;renderKalender();document.getElementById('calDagVerg').innerHTML='';}
+function laadSettings(){document.getElementById('settOrg').value=db.instellingen.organisatie||'';document.getElementById('settOrganisator').value=db.instellingen.organisator||'';}
+function slaSettingsOp(){db.instellingen.organisatie=document.getElementById('settOrg').value;db.instellingen.organisator=document.getElementById('settOrganisator').value;slaOp();}
+function exportData(){const blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='vergaderingen_'+new Date().toISOString().split('T')[0]+'.json';a.click();}
+function importData(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{try{const d=JSON.parse(ev.target.result);if(!d.vergaderingen)throw new Error();if(confirm(d.vergaderingen.length+' vergaderingen importeren?')){const ids=new Set(db.vergaderingen.map(v=>v.id));d.vergaderingen.forEach(v=>{if(!ids.has(v.id))db.vergaderingen.push(v);});slaOp();renderLijst();alert('Import succesvol!');}}catch(err){alert('Ongeldig bestand.');}};r.readAsText(f);}
+function resetApp(){if(confirm('Alle vergaderingen verwijderen?')){if(confirm('Zeker weten?')){db.vergaderingen=[];slaOp();renderLijst();}}}
+renderLijst();
+</script>
+</body>
+</html>
