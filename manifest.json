@@ -1,7 +1,7 @@
 {
-  "name": "Vergaderingen",
-  "short_name": "Vergaderingen",
-  "description": "App voor het organiseren van vergaderingen",
+  "name": "Tomeeto",
+  "short_name": "Tomeeto",
+  "description": "Tomeeto - App voor het organiseren van vergaderingen",
   "start_url": "/vergaderingen/vergadering-app.html",
   "display": "standalone",
   "background_color": "#185FA5",
@@ -15,4 +15,3 @@
     }
   ]
 }
-
