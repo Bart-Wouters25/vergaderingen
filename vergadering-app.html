@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Tomeeto</title>
+<title>Comtomeet</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon.svg">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Tomeeto">
+<meta name="apple-mobile-web-app-title" content="Comtomeet">
 <meta name="theme-color" content="#185FA5">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23185FA5'/%3E%3Crect x='10' y='18' width='44' height='36' rx='4' fill='white'/%3E%3Crect x='10' y='18' width='44' height='12' rx='4' fill='%230C447C'/%3E%3Ccircle cx='20' cy='24' r='3' fill='white'/%3E%3Ccircle cx='44' cy='24' r='3' fill='white'/%3E%3Cellipse cx='32' cy='38' rx='6' ry='8' fill='none' stroke='%23185FA5' stroke-width='2.5'/%3E%3Cline x1='32' y1='46' x2='32' y2='50' stroke='%23185FA5' stroke-width='2.5'/%3E%3Cline x1='27' y1='50' x2='37' y2='50' stroke='%23185FA5' stroke-width='2.5'/%3E%3Cpath d='M25 38 Q25 44 32 44 Q39 44 39 38' fill='none' stroke='%23185FA5' stroke-width='2.5'/%3E%3C/svg%3E">
 <style>
@@ -25,7 +25,6 @@ body{font-family:system-ui,sans-serif;font-size:15px;background:#f5f5f5;color:#1
 .btn-primary{border-color:#185FA5;color:#185FA5}
 .btn-danger{border-color:#A32D2D;color:#A32D2D}
 .btn-success{border-color:#3B6D11;color:#3B6D11}
-.btn-orange{border-color:#9A4F00;color:#9A4F00}
 .btn-full{width:100%;justify-content:center}
 .card{background:#fff;border:0.5px solid #e5e5e5;border-radius:12px;padding:14px 16px;margin-bottom:10px}
 .field{margin-bottom:14px}
@@ -33,7 +32,6 @@ body{font-family:system-ui,sans-serif;font-size:15px;background:#f5f5f5;color:#1
 .field input,.field select,.field textarea{width:100%;padding:10px 12px;border:0.5px solid #e5e5e5;border-radius:8px;font-size:14px;font-family:inherit;background:#fff;color:#1a1a1a;min-height:44px}
 .field textarea{min-height:80px;resize:vertical}
 .field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.field-row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
 .chip{display:inline-flex;align-items:center;gap:5px;background:#f5f5f5;border:0.5px solid #e5e5e5;border-radius:20px;padding:5px 10px;font-size:13px;color:#666}
 .chip button{background:none;border:none;cursor:pointer;color:#666;font-size:14px;line-height:1;padding:0}
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
@@ -46,6 +44,7 @@ body{font-family:system-ui,sans-serif;font-size:15px;background:#f5f5f5;color:#1
 .badge-green{background:#EAF3DE;color:#27500A}
 .badge-red{background:#FCEBEB;color:#7A1F1F}
 .badge-orange{background:#FEF0E0;color:#7A3800}
+.badge-notion{background:#E6F1FB;color:#0C447C}
 .meeting-row{display:flex;align-items:flex-start;gap:12px}
 .meeting-icon{width:42px;height:42px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
 .mi-blue{background:#E6F1FB;color:#185FA5}
@@ -60,10 +59,6 @@ body{font-family:system-ui,sans-serif;font-size:15px;background:#f5f5f5;color:#1
 .icon-btn{width:36px;height:36px;border:0.5px solid #e5e5e5;border-radius:8px;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#666;font-size:15px}
 .icon-btn:hover{background:#f5f5f5}
 .section-label{font-size:11px;font-weight:600;color:#666;letter-spacing:.06em;text-transform:uppercase;margin:16px 0 8px}
-.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
-.stat{background:#f5f5f5;border-radius:8px;padding:12px;text-align:center}
-.stat-n{font-size:22px;font-weight:500}
-.stat-l{font-size:11px;color:#666;margin-top:2px}
 .divider{border:none;border-top:0.5px solid #e5e5e5;margin:12px 0}
 .empty{text-align:center;padding:24px 16px;color:#666;font-size:14px}
 .tabs-bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:680px;display:flex;border-top:0.5px solid #e5e5e5;background:#fff;padding:4px 0 2px;z-index:100}
@@ -81,53 +76,66 @@ body{font-family:system-ui,sans-serif;font-size:15px;background:#f5f5f5;color:#1
 .rec-fill{height:100%;border-radius:2px;background:#E24B4A;transition:width .3s}
 .rec-pulse{width:14px;height:14px;border-radius:50%;background:#E24B4A;display:none;animation:pulse 1s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
- 
-/* Verslag bibliotheek */
-.bibl-card{background:#fff;border:0.5px solid #e5e5e5;border-radius:12px;padding:14px 16px;margin-bottom:10px;cursor:pointer;transition:border-color .2s}
-.bibl-card:hover{border-color:#185FA5}
-.bibl-card-title{font-size:15px;font-weight:500;margin-bottom:4px}
-.bibl-card-meta{font-size:12px;color:#666;display:flex;gap:10px;flex-wrap:wrap}
- 
-/* Samenvatting blok */
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 .samenvatting-blok{background:#E6F1FB;border-radius:10px;padding:14px 16px;margin-bottom:14px;border-left:4px solid #185FA5}
 .samenvatting-blok h3{font-size:12px;font-weight:600;color:#0C447C;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
 .samenvatting-blok p{font-size:14px;color:#1a1a1a;line-height:1.6}
- 
-/* Werkpunten */
 .werkpunt-card{background:#fff;border:0.5px solid #e5e5e5;border-radius:10px;padding:12px 14px;margin-bottom:8px}
 .werkpunt-card.status-klaar{border-color:#3B6D11;background:#f8fdf4}
 .werkpunt-card.status-progress{border-color:#854F0B;background:#fffbf5}
 .werkpunt-card.status-verlopen{border-color:#A32D2D;background:#fff8f8}
 .werkpunt-header{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px}
 .werkpunt-tekst{flex:1;font-size:14px;line-height:1.5}
-.werkpunt-meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:6px}
+.werkpunt-meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .status-select{padding:4px 8px;border:0.5px solid #e5e5e5;border-radius:20px;font-size:12px;font-family:inherit;background:#f5f5f5;cursor:pointer;color:#1a1a1a}
 .deadline-badge{font-size:12px;padding:3px 8px;border-radius:20px;display:flex;align-items:center;gap:4px}
 .dl-ok{background:#EAF3DE;color:#27500A}
 .dl-soon{background:#FAEEDA;color:#633806}
 .dl-verlopen{background:#FCEBEB;color:#7A1F1F}
- 
-/* Detail modal */
-.verslag-detail{padding:4px 0}
-.verslag-detail h2{font-size:17px;font-weight:600;margin-bottom:4px}
-.verslag-detail .meta{font-size:13px;color:#666;margin-bottom:14px}
- 
-/* Notif banner */
+.bibl-card{background:#fff;border:0.5px solid #e5e5e5;border-radius:12px;padding:14px 16px;margin-bottom:10px;cursor:pointer;transition:border-color .2s}
+.bibl-card:hover{border-color:#185FA5}
+.dag-header{background:linear-gradient(135deg,#185FA5,#0C447C);color:#fff;border-radius:12px;padding:16px;margin-bottom:14px}
+.dag-datum{font-size:13px;opacity:.8;margin-bottom:4px}
+.dag-titel{font-size:20px;font-weight:600;margin-bottom:12px}
+.dag-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.dag-stat{background:rgba(255,255,255,.15);border-radius:8px;padding:8px;text-align:center}
+.dag-stat-n{font-size:20px;font-weight:600}
+.dag-stat-l{font-size:10px;opacity:.8;margin-top:1px}
+.dag-item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:0.5px solid #e5e5e5}
+.dag-item:last-child{border-bottom:none}
+.dag-tijd{font-size:12px;color:#666;width:45px;flex-shrink:0;padding-top:2px}
+.dag-info{flex:1}
+.dag-naam{font-size:14px;font-weight:500;margin-bottom:2px}
+.dag-sub{font-size:12px;color:#666;display:flex;gap:8px;flex-wrap:wrap}
+.dag-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.dot-werk{background:#185FA5}
+.dot-prive{background:#534AB7}
+.dot-socio{background:#0F6E56}
+.wp-urgent{background:#fff;border:0.5px solid #e5e5e5;border-radius:10px;padding:10px 12px;margin-bottom:8px;display:flex;align-items:center;gap:10px}
+.wp-urgent.verlopen{border-color:#A32D2D;background:#fff8f8}
+.wp-urgent.soon{border-color:#854F0B;background:#fffbf5}
+.domein-filter{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.domein-btn{padding:6px 14px;border:0.5px solid #e5e5e5;border-radius:20px;font-size:13px;cursor:pointer;background:#fff;font-family:inherit;color:#666;min-height:36px}
+.domein-btn.act-alle{background:#f5f5f5;border-color:#666;color:#1a1a1a;font-weight:500}
+.domein-btn.act-werk{background:#E6F1FB;border-color:#185FA5;color:#0C447C;font-weight:500}
+.domein-btn.act-prive{background:#EEEDFE;border-color:#534AB7;color:#3C3489;font-weight:500}
+.domein-btn.act-socio{background:#E1F5EE;border-color:#0F6E56;color:#085041;font-weight:500}
+.week-dag-titel{font-size:12px;font-weight:600;color:#185FA5;text-transform:uppercase;letter-spacing:.05em;padding:4px 0;margin-bottom:4px;border-bottom:0.5px solid #E6F1FB}
 .notif-banner{background:#185FA5;color:#fff;padding:10px 16px;font-size:13px;display:none;align-items:center;gap:8px;border-radius:8px;margin-bottom:10px}
- 
+.sync-banner{display:none;position:fixed;bottom:70px;left:50%;transform:translateX(-50%);width:calc(100% - 32px);max-width:648px;background:#0C447C;color:#fff;padding:10px 14px;border-radius:10px;font-size:13px;align-items:center;gap:8px;z-index:200}
 @media(prefers-color-scheme:dark){
   body{background:#1a1a1a;color:#f0f0f0}
   .app{background:#1a1a1a;box-shadow:none}
-  .card,.modal-inner,.bibl-card,.werkpunt-card{background:#242424;border-color:#333}
+  .card,.modal-inner,.bibl-card,.werkpunt-card,.wp-urgent{background:#242424;border-color:#333}
   .topbar,.tabs-bottom{background:#1a1a1a;border-color:#333}
   .field input,.field select,.field textarea{background:#242424;color:#f0f0f0;border-color:#333}
-  .stat{background:#2a2a2a}
   .icon-btn{border-color:#333;color:#aaa}
-  .icon-btn:hover,.btn:hover,.cal-cell:hover{background:#2a2a2a}
+  .icon-btn:hover,.btn:hover{background:#2a2a2a}
   .chip{background:#2a2a2a;border-color:#333;color:#aaa}
-  .empty,.bibl-card-meta,.meeting-meta{color:#aaa}
+  .empty,.meeting-meta,.dag-sub,.dag-tijd{color:#aaa}
   .status-select{background:#2a2a2a;border-color:#444;color:#f0f0f0}
   .samenvatting-blok{background:#1a2a3a}
+  .domein-btn{background:#242424;border-color:#333;color:#aaa}
 }
 </style>
 </head>
@@ -146,68 +154,134 @@ body{font-family:system-ui,sans-serif;font-size:15px;background:#f5f5f5;color:#1
         <line x1="27" y1="50" x2="37" y2="50" stroke="#185FA5" stroke-width="2.5"/>
         <path d="M25 38 Q25 44 32 44 Q39 44 39 38" fill="none" stroke="#185FA5" stroke-width="2.5"/>
       </svg>
-      Tomeeto
+      Comtomeet
     </div>
-    <button class="btn btn-primary" onclick="openForm()" id="topAddBtn" style="padding:8px 12px;min-height:36px"><i class="ti ti-plus"></i> Nieuw</button>
+    <button class="btn btn-primary" id="topAddBtn" onclick="openForm()" style="padding:8px 12px;min-height:36px;display:none"><i class="ti ti-plus"></i> Nieuw</button>
   </div>
- 
-  <!-- Vergadering formulier modal -->
+
+  <div id="syncBanner" class="sync-banner">
+    <i class="ti ti-refresh" id="syncIcon"></i>
+    <span id="syncTxt">Synchroniseren...</span>
+  </div>
+
+  <!-- Formulier modal -->
   <div id="formModal" class="modal-wrap">
     <div class="modal-inner">
-      <div class="modal-head"><span id="formModalTitle">Nieuwe vergadering</span><button class="icon-btn" onclick="closeForm()"><i class="ti ti-x"></i></button></div>
-      <div class="field"><label>Onderwerp *</label><input id="fTitel" type="text" placeholder="Vergaderonderwerp"></div>
-      <div class="field-row">
-        <div class="field"><label>Type</label><select id="fType"><option value="intern">Intern</option><option value="klant">Klant</option><option value="online">Online</option><option value="kickoff">Kickoff</option></select></div>
-        <div class="field"><label>Status</label><select id="fStatus"><option value="gepland">Gepland</option><option value="bezig">Bezig</option><option value="afgelopen">Afgelopen</option><option value="geannuleerd">Geannuleerd</option></select></div>
+      <div class="modal-head">
+        <span id="formTitel">Nieuwe activiteit</span>
+        <button class="icon-btn" onclick="closeForm()"><i class="ti ti-x"></i></button>
       </div>
+      <div class="field"><label>Naam *</label><input id="fTitel" type="text" placeholder="Naam van de activiteit"></div>
+      <div class="field-row">
+        <div class="field"><label>Domein</label>
+          <select id="fDomein">
+            <option value="werk">Werk</option>
+            <option value="prive">Prive</option>
+            <option value="socio">Sociocultureel</option>
+          </select>
+        </div>
+        <div class="field"><label>Type</label>
+          <select id="fType">
+            <option value="vergadering">Vergadering</option>
+            <option value="afspraak">Afspraak</option>
+            <option value="evenement">Evenement</option>
+            <option value="online">Online</option>
+          </select>
+        </div>
+      </div>
+      <div class="field"><label>Organisatie / Groep</label><input id="fOrganisatie" type="text" placeholder="bv. Toneelclub, Sportcomite, Werk..."></div>
       <div class="field"><label>Datum *</label><input id="fDatum" type="date"></div>
       <div class="field-row">
         <div class="field"><label>Starttijd</label><input id="fStart" type="time" value="09:00"></div>
         <div class="field"><label>Eindtijd</label><input id="fEinde" type="time" value="10:00"></div>
       </div>
-      <div class="field"><label>Locatie</label><input id="fLocatie" type="text" placeholder="Zaal, adres of vergaderlink"></div>
+      <div class="field"><label>Locatie</label><input id="fLocatie" type="text" placeholder="Adres, zaal of link"></div>
       <div class="field"><label>Organisator</label><input id="fOrg" type="text" placeholder="Naam organisator"></div>
-      <div class="field"><label>Deelnemers (naam + Enter)</label><input id="fDeelInput" type="text" placeholder="Naam deelnemer..." onkeydown="addDeelnemer(event)"><div class="chips" id="fDeelChips"></div></div>
-      <div class="field"><label>E-mails deelnemers (kommagescheiden)</label><input id="fEmails" type="text" placeholder="a@b.be, c@d.be"></div>
-      <div class="field"><label>Agenda (één punt per regel)</label><textarea id="fAgenda" placeholder="Bespreek Q3&#10;Planning Q4&#10;Rondvraag"></textarea></div>
+      <div class="field">
+        <label>Deelnemers (naam + Enter)</label>
+        <input id="fDeelInput" type="text" placeholder="Naam deelnemer..." onkeydown="addDeelnemer(event)">
+        <div class="chips" id="fDeelChips"></div>
+      </div>
+      <div class="field"><label>E-mails (kommagescheiden)</label><input id="fEmails" type="text" placeholder="a@b.be, c@d.be"></div>
+      <div class="field"><label>Agenda / Beschrijving</label><textarea id="fAgenda" placeholder="Wat staat er op de agenda?"></textarea></div>
+      <div class="field"><label>Herinnering</label>
+        <select id="fHerinnering">
+          <option value="">Geen herinnering</option>
+          <option value="15">15 minuten voor</option>
+          <option value="30">30 minuten voor</option>
+          <option value="60">1 uur voor</option>
+          <option value="1440">1 dag voor</option>
+        </select>
+      </div>
       <div class="field"><label>Notities</label><textarea id="fNotities" placeholder="Extra informatie..."></textarea></div>
+      <div class="field">
+        <label>Delen met team</label>
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border:0.5px solid #e5e5e5;border-radius:8px;background:#f9f9f9">
+          <input type="checkbox" id="fNotion" style="width:18px;height:18px;min-height:unset;cursor:pointer">
+          <span style="font-size:13px;color:#666"><i class="ti ti-brand-notion" style="font-size:14px;vertical-align:-2px"></i> Activiteit delen via Notion</span>
+        </div>
+      </div>
       <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:4px">
         <button class="btn" onclick="closeForm()">Annuleren</button>
-        <button class="btn btn-primary" onclick="slaVergaderingOp()"><i class="ti ti-check"></i> Opslaan</button>
+        <button class="btn btn-primary" onclick="slaOp2()"><i class="ti ti-check"></i> Opslaan</button>
       </div>
     </div>
   </div>
- 
-  <!-- Verslag detail modal -->
+
+  <!-- Verslag modal -->
   <div id="verslagModal" class="modal-wrap">
     <div class="modal-inner">
       <div class="modal-head">
         <span>Verslag</span>
         <div style="display:flex;gap:6px">
-          <button class="icon-btn" onclick="deelVerslag()" title="Deel via e-mail"><i class="ti ti-mail"></i></button>
+          <button class="icon-btn" onclick="deelVerslag()"><i class="ti ti-mail"></i></button>
           <button class="icon-btn" onclick="sluitVerslagModal()"><i class="ti ti-x"></i></button>
         </div>
       </div>
       <div id="verslagModalInhoud"></div>
     </div>
   </div>
- 
-  <!-- Pagina: Overzicht -->
-  <div id="page-overzicht" class="page active">
+
+  <!-- MIJN DAG -->
+  <div id="page-mijdag" class="page active">
     <div id="notifBanner" class="notif-banner"><i class="ti ti-bell"></i><span id="notifTekst"></span></div>
-    <div class="stat-grid" id="statsGrid"></div>
-    <div class="section-label">Aankomend</div><div id="lijstAankomend"></div>
-    <div class="section-label">Afgelopen</div><div id="lijstAfgelopen"></div>
+    <div id="dagHeader" class="dag-header"></div>
+    <button class="btn btn-primary btn-full" onclick="laadVanNotion()" style="margin-bottom:12px;font-size:13px">
+      <i class="ti ti-refresh"></i> Laad gedeelde activiteiten van team
+    </button>
+    <div class="domein-filter" id="dagFilterBar">
+      <button class="domein-btn act-alle" onclick="setDagFilter('alle',this)">Alle</button>
+      <button class="domein-btn" onclick="setDagFilter('werk',this)"><i class="ti ti-briefcase" style="font-size:12px"></i> Werk</button>
+      <button class="domein-btn" onclick="setDagFilter('prive',this)"><i class="ti ti-home" style="font-size:12px"></i> Prive</button>
+      <button class="domein-btn" onclick="setDagFilter('socio',this)"><i class="ti ti-users" style="font-size:12px"></i> Sociocultureel</button>
+    </div>
+    <div class="section-label">Vandaag</div>
+    <div id="dagVandaag" class="card"></div>
+    <div class="section-label">Deze week</div>
+    <div id="dagWeek"></div>
+    <div class="section-label">Dringende werkpunten</div>
+    <div id="dagWerkpunten"></div>
   </div>
- 
-  <!-- Pagina: Opname & Verslag -->
+
+  <!-- ACTIVITEITEN -->
+  <div id="page-activiteiten" class="page">
+    <div class="domein-filter" id="actFilterBar">
+      <button class="domein-btn act-alle" onclick="setActFilter('alle',this)">Alle</button>
+      <button class="domein-btn" onclick="setActFilter('werk',this)"><i class="ti ti-briefcase" style="font-size:12px"></i> Werk</button>
+      <button class="domein-btn" onclick="setActFilter('prive',this)"><i class="ti ti-home" style="font-size:12px"></i> Prive</button>
+      <button class="domein-btn" onclick="setActFilter('socio',this)"><i class="ti ti-users" style="font-size:12px"></i> Sociocultureel</button>
+    </div>
+    <div id="actLijst"></div>
+  </div>
+
+  <!-- OPNAME -->
   <div id="page-opname" class="page">
-    <div class="section-label">Selecteer vergadering</div>
-    <div class="field"><select id="opnameVerg" onchange="laadOpnameVerg()"><option value="">— kies vergadering —</option></select></div>
+    <div class="section-label">Selecteer activiteit</div>
+    <div class="field"><select id="opnameVerg" onchange="laadOpnameVerg()"><option value="">-- kies activiteit --</option></select></div>
     <div id="opnameCard" style="display:none">
       <div class="card">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
-          <span id="opnameVergNaam" style="font-weight:500;font-size:15px"></span>
+          <span id="opnameNaam" style="font-weight:500;font-size:15px"></span>
           <span class="badge badge-gray" id="opnameDatum"></span>
         </div>
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
@@ -218,416 +292,741 @@ body{font-family:system-ui,sans-serif;font-size:15px;background:#f5f5f5;color:#1
         <div class="rec-bar"><div class="rec-fill" id="recFill" style="width:0%"></div></div>
         <div style="display:flex;gap:8px;margin-top:12px">
           <button class="btn btn-success btn-full" id="btnStart" onclick="startOpname()"><i class="ti ti-player-record"></i> Start opname</button>
-          <button class="btn btn-danger btn-full" id="btnStop" onclick="stopOpname()" style="display:none"><i class="ti ti-player-stop"></i> Stop opname</button>
+          <button class="btn btn-danger btn-full" id="btnStop" onclick="stopOpname()" style="display:none"><i class="ti ti-player-stop"></i> Stop</button>
         </div>
       </div>
- 
       <div id="opnameResultaat" style="display:none">
         <div class="card">
-          <div class="section-label" style="margin-top:0">Opname beschikbaar</div>
-          <button class="btn btn-primary" onclick="downloadOpname()"><i class="ti ti-download"></i> Download opname (.webm)</button>
+          <button class="btn btn-primary" onclick="downloadOpname()"><i class="ti ti-download"></i> Download opname</button>
         </div>
         <div class="card">
-          <div style="font-weight:500;font-size:15px;margin-bottom:4px">AI-verslag genereren</div>
-          <div style="font-size:13px;color:#666;margin-bottom:12px;line-height:1.5">Plak het transcript en klik op genereren. De AI maakt automatisch een samenvatting en werkpunten met verantwoordelijken en deadlines.</div>
-          <div class="field"><label>Transcript</label><textarea id="transcriptInput" style="min-height:120px" placeholder="Plak hier de tekst van de vergadering..."></textarea></div>
-          <button class="btn btn-primary btn-full" onclick="genereerVerslag()" id="btnGenereer"><i class="ti ti-sparkles"></i> Genereer AI-verslag</button>
-          <div id="verslagProgress" style="display:none;margin-top:12px">
+          <div style="font-weight:500;font-size:15px;margin-bottom:8px">AI-verslag genereren</div>
+          <div class="field"><label>Transcript</label><textarea id="transcriptInput" style="min-height:100px" placeholder="Plak hier de tekst van de vergadering..."></textarea></div>
+          <button class="btn btn-primary btn-full" id="btnGenereer" onclick="genereerVerslag()"><i class="ti ti-sparkles"></i> Genereer AI-verslag</button>
+          <div id="verslagProgress" style="display:none;margin-top:10px">
             <div class="progress-bar"><div class="progress-fill" id="verslagProgFill" style="width:10%"></div></div>
-            <div style="font-size:13px;color:#666;margin-top:6px;text-align:center" id="verslagProgTxt">AI analyseert de vergadering...</div>
+            <div style="font-size:13px;color:#666;margin-top:4px;text-align:center" id="verslagProgTxt">Bezig...</div>
           </div>
         </div>
       </div>
- 
       <div id="verslagGegenereerd" style="display:none">
         <div class="card" style="border-color:#185FA5">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-            <span style="font-weight:500;font-size:15px;color:#185FA5"><i class="ti ti-check"></i> Verslag opgeslagen in bibliotheek</span>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+            <span style="font-weight:500;color:#185FA5"><i class="ti ti-check"></i> Verslag opgeslagen</span>
             <div style="display:flex;gap:6px">
-              <button class="icon-btn" onclick="deelVerslagOpname()" title="Deel via e-mail"><i class="ti ti-mail"></i></button>
-              <button class="icon-btn" onclick="toonVerslagOpname()" title="Bekijken"><i class="ti ti-eye"></i></button>
+              <button class="icon-btn" onclick="deelVerslagOpname()"><i class="ti ti-mail"></i></button>
+              <button class="icon-btn" onclick="toonVerslagOpname()"><i class="ti ti-eye"></i></button>
             </div>
           </div>
           <div id="verslagPreview"></div>
         </div>
       </div>
     </div>
- 
     <div class="card" style="margin-top:10px;background:#E6F1FB;border-color:#185FA5">
-      <div style="font-size:13px;font-weight:500;color:#0C447C;margin-bottom:6px"><i class="ti ti-info-circle"></i> Hoe werkt het?</div>
-      <div style="font-size:12px;color:#0C447C;line-height:1.7">1. Selecteer een vergadering en start de opname<br>2. Gebruik Google Recorder of Otter.ai voor transcriptie<br>3. Plak de tekst en genereer het AI-verslag<br>4. Verslag + werkpunten worden opgeslagen in de bibliotheek<br>5. Deel het verslag via e-mail met alle genodigden</div>
+      <div style="font-size:13px;font-weight:500;color:#0C447C;margin-bottom:4px"><i class="ti ti-info-circle"></i> Hoe werkt het?</div>
+      <div style="font-size:12px;color:#0C447C;line-height:1.7">1. Selecteer een activiteit<br>2. Start de opname<br>3. Plak transcript en genereer AI-verslag<br>4. Verslag wordt opgeslagen in bibliotheek</div>
     </div>
   </div>
- 
-  <!-- Pagina: Bibliotheek -->
+
+  <!-- BIBLIOTHEEK -->
   <div id="page-bibliotheek" class="page">
     <div id="bibliLijst"></div>
   </div>
- 
-  <!-- Pagina: Werkpunten -->
+
+  <!-- WERKPUNTEN -->
   <div id="page-werkpunten" class="page">
     <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
-      <button class="btn" id="filterAlle" onclick="filterWerkpunten('alle',this)" style="border-color:#185FA5;color:#185FA5">Alle</button>
-      <button class="btn" id="filterToebedeeld" onclick="filterWerkpunten('toebedeeld',this)">Toebedeeld</button>
-      <button class="btn" id="filterProgress" onclick="filterWerkpunten('progress',this)">In progress</button>
-      <button class="btn" id="filterKlaar" onclick="filterWerkpunten('klaar',this)">Klaar</button>
-      <button class="btn" id="filterVerlopen" onclick="filterWerkpunten('verlopen',this)" style="color:#A32D2D">Verlopen</button>
+      <button class="btn" onclick="setWPFilter('alle',this)" style="border-color:#185FA5;color:#185FA5">Alle</button>
+      <button class="btn" onclick="setWPFilter('toebedeeld',this)">Toebedeeld</button>
+      <button class="btn" onclick="setWPFilter('progress',this)">In progress</button>
+      <button class="btn" onclick="setWPFilter('klaar',this)">Klaar</button>
+      <button class="btn btn-danger" onclick="setWPFilter('verlopen',this)">Verlopen</button>
     </div>
-    <div id="werkpuntenLijst"></div>
+    <div id="wpLijst"></div>
   </div>
- 
-  <!-- Pagina: Uitnodigingen -->
-  <div id="page-uitnodiging" class="page">
-    <div class="section-label">Selecteer vergadering</div>
-    <div class="field"><select id="uitnVerg" onchange="laadUitnVerg()"><option value="">— kies vergadering —</option></select></div>
-    <div id="uitnContent" style="display:none">
-      <div class="card">
-        <div style="font-weight:500;margin-bottom:10px" id="uitnTitel"></div>
-        <div style="background:#f5f5f5;border-radius:8px;padding:10px 12px;margin-bottom:10px;font-size:13px;line-height:1.5;color:#555;white-space:pre-wrap;word-break:break-word" id="uitnPreview"></div>
-        <div class="divider"></div>
-        <div class="section-label">Verstuur uitnodiging</div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <button class="btn btn-primary" onclick="stuurMailAllen()"><i class="ti ti-mail"></i> E-mail allen</button>
-          <button class="btn btn-success" onclick="stuurWAAllen()"><i class="ti ti-brand-whatsapp"></i> WhatsApp allen</button>
-        </div>
-        <div class="divider"></div>
-        <div class="section-label">Per deelnemer</div>
-        <div id="uitnDeelnemers"></div>
-      </div>
-    </div>
-  </div>
- 
+
   <div class="tabs-bottom">
-    <button class="tab-btn active" onclick="toonPagina('overzicht',this)"><i class="ti ti-layout-list"></i><span>Overzicht</span></button>
+    <button class="tab-btn active" onclick="toonPagina('mijdag',this)"><i class="ti ti-sunshine"></i><span>Mijn dag</span></button>
+    <button class="tab-btn" onclick="toonPagina('activiteiten',this)"><i class="ti ti-layout-list"></i><span>Activiteiten</span></button>
     <button class="tab-btn" onclick="toonPagina('opname',this)"><i class="ti ti-microphone"></i><span>Opname</span></button>
     <button class="tab-btn" onclick="toonPagina('bibliotheek',this)"><i class="ti ti-books"></i><span>Bibliotheek</span></button>
     <button class="tab-btn" onclick="toonPagina('werkpunten',this)"><i class="ti ti-checkbox"></i><span>Werkpunten</span></button>
-    <button class="tab-btn" onclick="toonPagina('uitnodiging',this)"><i class="ti ti-send"></i><span>Uitnodiging</span></button>
   </div>
 </div>
- 
+
 <script>
-const STORE='verg_app_v2';
-let db=laadDb(),editId=null,tempDeeln=[],mediaRec=null,audioChunks=[],recInterval=null,recSecs=0,audioBlob=null;
-let actieveVerslagId=null, werkpuntFilter='alle';
-const nu=new Date();
- 
-function laadDb(){
-  try{const d=localStorage.getItem(STORE);if(d)return JSON.parse(d);}catch(e){}
-  return{vergaderingen:[],verslagen:[],werkpunten:[],instellingen:{organisatie:'',organisator:''},versie:'2.0'};
+// ===== DATA =====
+const STORE = 'comtomeet_v1';
+const NOTION_DB_ID = '6cc2a221-0b36-48ba-abeb-3e8c29f86e49';
+
+var db = laadDb();
+var editId = null;
+var tempDeeln = [];
+var mediaRec = null;
+var audioChunks = [];
+var recInterval = null;
+var recSecs = 0;
+var audioBlob = null;
+var actieveVerslagId = null;
+var wpFilter = 'alle';
+var dagFilter = 'alle';
+var actFilter = 'alle';
+
+function laadDb() {
+  try { var d = localStorage.getItem(STORE); if (d) return JSON.parse(d); } catch(e) {}
+  return { vergaderingen: [], verslagen: [], werkpunten: [], versie: '3.0' };
 }
-function slaOp(){localStorage.setItem(STORE,JSON.stringify(db));}
-function vandaag(){return new Date().toISOString().split('T')[0];}
-function fmtDatum(d){if(!d)return'';const[y,m,dd]=d.split('-');const mn=['jan','feb','mrt','apr','mei','jun','jul','aug','sep','okt','nov','dec'];return parseInt(dd)+' '+mn[parseInt(m)-1]+' '+y;}
-function typeInfo(t){const map={intern:{cls:'mi-blue',badge:'badge-blue',icon:'ti-building'},klant:{cls:'mi-teal',badge:'badge-teal',icon:'ti-users'},online:{cls:'mi-purple',badge:'badge-purple',icon:'ti-video'},kickoff:{cls:'mi-amber',badge:'badge-amber',icon:'ti-rocket'}};return map[t]||map.intern;}
- 
-function toonPagina(naam,btn){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('page-'+naam).classList.add('active');
+function bewaarDb() { localStorage.setItem(STORE, JSON.stringify(db)); }
+function vandaag() { return new Date().toISOString().split('T')[0]; }
+function fmtDatum(d) {
+  if (!d) return '';
+  var p = d.split('-');
+  var mn = ['jan','feb','mrt','apr','mei','jun','jul','aug','sep','okt','nov','dec'];
+  return parseInt(p[2]) + ' ' + mn[parseInt(p[1])-1] + ' ' + p[0];
+}
+function fmtDag(d) {
+  if (!d) return '';
+  var dagen = ['zondag','maandag','dinsdag','woensdag','donderdag','vrijdag','zaterdag'];
+  var dt = new Date(d + 'T00:00:00');
+  return dagen[dt.getDay()];
+}
+function domInfo(domein) {
+  var map = {
+    werk: { cls:'mi-blue', dot:'dot-werk', badge:'badge-blue', icon:'ti-briefcase', label:'Werk' },
+    prive: { cls:'mi-purple', dot:'dot-prive', badge:'badge-purple', icon:'ti-home', label:'Prive' },
+    socio: { cls:'mi-teal', dot:'dot-socio', badge:'badge-teal', icon:'ti-users', label:'Sociocultureel' }
+  };
+  return map[domein] || map['werk'];
+}
+
+// ===== NAVIGATIE =====
+function toonPagina(naam, btn) {
+  document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+  document.getElementById('page-' + naam).classList.add('active');
   btn.classList.add('active');
-  document.getElementById('topAddBtn').style.display=naam==='overzicht'?'flex':'none';
-  if(naam==='overzicht')renderLijst();
-  if(naam==='opname')vulOpnameSelect();
-  if(naam==='bibliotheek')renderBibliotheek();
-  if(naam==='werkpunten')renderWerkpunten();
-  if(naam==='uitnodiging')vulUitnSelect();
+  document.getElementById('topAddBtn').style.display = (naam === 'activiteiten') ? 'flex' : 'none';
+  if (naam === 'mijdag') renderMijnDag();
+  if (naam === 'activiteiten') renderActiviteiten();
+  if (naam === 'opname') vulOpnameSelect();
+  if (naam === 'bibliotheek') renderBibliotheek();
+  if (naam === 'werkpunten') renderWerkpunten();
 }
- 
-// ===== OVERZICHT =====
-function renderLijst(){
-  const a=document.getElementById('lijstAankomend'),p=document.getElementById('lijstAfgelopen');
-  a.innerHTML='';p.innerHTML='';
-  const sorted=[...db.vergaderingen].sort((a,b)=>a.datum.localeCompare(b.datum)||a.start.localeCompare(b.start));
-  const up=sorted.filter(v=>v.datum>=vandaag()),pa=sorted.filter(v=>v.datum<vandaag()).reverse();
-  if(!up.length)a.innerHTML='<div class="empty"><i class="ti ti-calendar-off" style="font-size:24px;display:block;margin-bottom:6px"></i>Geen aankomende vergaderingen</div>';
-  else up.forEach(v=>renderVergCard(v,a));
-  if(!pa.length)p.innerHTML='<div class="empty" style="padding:10px;font-size:13px">Geen afgelopen vergaderingen</div>';
-  else pa.forEach(v=>renderVergCard(v,p));
-  renderStats();
-  checkDeadlines();
+
+// ===== MIJN DAG =====
+function renderMijnDag() {
+  var nu = new Date();
+  var maanden = ['januari','februari','maart','april','mei','juni','juli','augustus','september','oktober','november','december'];
+  var dagen = ['zondag','maandag','dinsdag','woensdag','donderdag','vrijdag','zaterdag'];
+  var vandaagStr = vandaag();
+  var weekEinde = new Date(nu); weekEinde.setDate(weekEinde.getDate() + 7);
+  var weekEindeStr = weekEinde.toISOString().split('T')[0];
+
+  var verg = db.vergaderingen.filter(function(v) {
+    return dagFilter === 'alle' || v.domein === dagFilter;
+  });
+  var vandaagVerg = verg.filter(function(v) { return v.datum === vandaagStr; })
+    .sort(function(a,b) { return a.start.localeCompare(b.start); });
+  var weekVerg = verg.filter(function(v) { return v.datum > vandaagStr && v.datum <= weekEindeStr; })
+    .sort(function(a,b) { return a.datum.localeCompare(b.datum) || a.start.localeCompare(b.start); });
+
+  var openWP = db.werkpunten.filter(function(w) { return w.status !== 'klaar'; }).length;
+  var verlopen = db.werkpunten.filter(function(w) { return w.deadline && w.deadline < vandaagStr && w.status !== 'klaar'; }).length;
+
+  document.getElementById('dagHeader').innerHTML =
+    '<div class="dag-datum">' + dagen[nu.getDay()] + ', ' + nu.getDate() + ' ' + maanden[nu.getMonth()] + ' ' + nu.getFullYear() + '</div>' +
+    '<div class="dag-titel">Goedemorgen!</div>' +
+    '<div class="dag-stats">' +
+      '<div class="dag-stat"><div class="dag-stat-n">' + vandaagVerg.length + '</div><div class="dag-stat-l">Vandaag</div></div>' +
+      '<div class="dag-stat"><div class="dag-stat-n">' + weekVerg.length + '</div><div class="dag-stat-l">Deze week</div></div>' +
+      '<div class="dag-stat"><div class="dag-stat-n" style="color:' + (verlopen > 0 ? '#ffcc88' : '#fff') + '">' + openWP + '</div><div class="dag-stat-l">Werkpunten</div></div>' +
+    '</div>';
+
+  var dagVandaag = document.getElementById('dagVandaag');
+  if (!vandaagVerg.length) {
+    dagVandaag.innerHTML = '<div style="text-align:center;padding:12px;color:#666;font-size:13px"><i class="ti ti-calendar-off" style="font-size:20px;display:block;margin-bottom:4px"></i>Niets gepland vandaag</div>';
+  } else {
+    dagVandaag.innerHTML = vandaagVerg.map(function(v) {
+      var di = domInfo(v.domein);
+      return '<div class="dag-item">' +
+        '<div class="dag-dot ' + di.dot + '"></div>' +
+        '<div class="dag-tijd">' + v.start + '</div>' +
+        '<div class="dag-info">' +
+          '<div class="dag-naam">' + v.titel + (v.vanNotion ? ' <span class="badge badge-notion" style="font-size:10px"><i class="ti ti-brand-notion" style="font-size:9px"></i> Gedeeld</span>' : '') + '</div>' +
+          '<div class="dag-sub">' +
+            '<span>' + v.start + '-' + v.einde + '</span>' +
+            (v.locatie ? '<span><i class="ti ti-map-pin" style="font-size:10px"></i>' + v.locatie + '</span>' : '') +
+            '<span class="badge ' + di.badge + '" style="font-size:10px">' + di.label + '</span>' +
+            (v.organisatie ? '<span>' + v.organisatie + '</span>' : '') +
+          '</div>' +
+        '</div></div>';
+    }).join('');
+  }
+
+  var dagWeek = document.getElementById('dagWeek');
+  if (!weekVerg.length) {
+    dagWeek.innerHTML = '<div class="card"><div style="text-align:center;padding:8px;color:#666;font-size:13px">Niets meer deze week</div></div>';
+  } else {
+    var perDag = {};
+    weekVerg.forEach(function(v) { if (!perDag[v.datum]) perDag[v.datum] = []; perDag[v.datum].push(v); });
+    dagWeek.innerHTML = Object.keys(perDag).map(function(datum) {
+      var vv = perDag[datum];
+      return '<div style="margin-bottom:14px">' +
+        '<div class="week-dag-titel">' + fmtDag(datum) + ' ' + fmtDatum(datum) + '</div>' +
+        vv.map(function(v) {
+          var di = domInfo(v.domein);
+          return '<div class="dag-item">' +
+            '<div class="dag-dot ' + di.dot + '"></div>' +
+            '<div class="dag-tijd">' + v.start + '</div>' +
+            '<div class="dag-info">' +
+              '<div class="dag-naam">' + v.titel + (v.vanNotion ? ' <span class="badge badge-notion" style="font-size:10px"><i class="ti ti-brand-notion" style="font-size:9px"></i> Gedeeld</span>' : '') + '</div>' +
+              '<div class="dag-sub"><span class="badge ' + di.badge + '" style="font-size:10px">' + di.label + '</span>' +
+              (v.organisatie ? '<span>' + v.organisatie + '</span>' : '') +
+              (v.locatie ? '<span><i class="ti ti-map-pin" style="font-size:10px"></i>' + v.locatie + '</span>' : '') +
+              '</div></div></div>';
+        }).join('') + '</div>';
+    }).join('');
+  }
+
+  var morgen = new Date(); morgen.setDate(morgen.getDate() + 1);
+  var morgenStr = morgen.toISOString().split('T')[0];
+  var dringend = db.werkpunten.filter(function(w) {
+    return w.status !== 'klaar' && w.deadline && w.deadline <= morgenStr;
+  }).sort(function(a,b) { return a.deadline.localeCompare(b.deadline); }).slice(0, 5);
+
+  var dagWP = document.getElementById('dagWerkpunten');
+  if (!dringend.length) {
+    dagWP.innerHTML = '<div class="card"><div style="text-align:center;padding:8px;color:#27500A;font-size:13px"><i class="ti ti-circle-check"></i> Geen dringende werkpunten</div></div>';
+  } else {
+    dagWP.innerHTML = dringend.map(function(w) {
+      var verlopen = w.deadline < vandaagStr;
+      return '<div class="wp-urgent ' + (verlopen ? 'verlopen' : 'soon') + '">' +
+        '<div style="flex:1">' +
+          '<div style="font-size:14px;font-weight:500">' + w.taak + '</div>' +
+          '<div style="font-size:12px;color:#666;margin-top:2px"><i class="ti ti-user" style="font-size:10px"></i> ' + w.verantwoordelijke + ' &nbsp;·&nbsp; <i class="ti ti-calendar-due" style="font-size:10px"></i> ' + fmtDatum(w.deadline) + (verlopen ? ' <span class="badge badge-red">Verlopen!</span>' : '') + '</div>' +
+        '</div>' +
+        '<select class="status-select" onchange="updateWPStatus(\'' + w.id + '\',this.value)">' +
+          '<option value="toebedeeld"' + (w.status === 'toebedeeld' ? ' selected' : '') + '>Toebedeeld</option>' +
+          '<option value="progress"' + (w.status === 'progress' ? ' selected' : '') + '>Bezig</option>' +
+          '<option value="klaar"' + (w.status === 'klaar' ? ' selected' : '') + '>Klaar</option>' +
+        '</select></div>';
+    }).join('');
+  }
+
+  var banner = document.getElementById('notifBanner');
+  var aantDr = db.werkpunten.filter(function(w) { return w.status !== 'klaar' && w.deadline && w.deadline <= morgenStr; }).length;
+  if (aantDr) { banner.style.display = 'flex'; document.getElementById('notifTekst').textContent = aantDr + ' werkpunt' + (aantDr > 1 ? 'en' : '') + ' met deadline vandaag of morgen!'; }
+  else banner.style.display = 'none';
 }
- 
-function renderVergCard(v,container){
-  const ti=typeInfo(v.type),d=document.createElement('div');
-  const heeftVerslag=db.verslagen.some(vs=>vs.vergaderingId===v.id);
-  d.className='card';
-  d.innerHTML='<div class="meeting-row"><div class="meeting-icon '+ti.cls+'"><i class="ti '+ti.icon+'"></i></div><div class="meeting-info"><div class="meeting-title">'+v.titel+'<span class="badge '+ti.badge+'">'+v.type+'</span>'+(heeftVerslag?'<span class="badge badge-green"><i class="ti ti-file-text" style="font-size:10px"></i> verslag</span>':'')+'</div><div class="meeting-meta"><span><i class="ti ti-calendar"></i>'+fmtDatum(v.datum)+'</span><span><i class="ti ti-clock"></i>'+v.start+'-'+v.einde+'</span>'+(v.locatie?'<span><i class="ti ti-map-pin"></i>'+v.locatie+'</span>':'')+(v.deelnemers.length?'<span><i class="ti ti-users"></i>'+v.deelnemers.length+'</span>':'')+'</div></div><div class="actions"><button class="icon-btn" onclick="bewerkVerg('+v.id+')"><i class="ti ti-edit"></i></button><button class="icon-btn" onclick="verwijderVerg('+v.id+')"><i class="ti ti-trash"></i></button></div></div>';
+
+function setDagFilter(f, btn) {
+  dagFilter = f;
+  document.querySelectorAll('#dagFilterBar .domein-btn').forEach(function(b) { b.className = 'domein-btn'; });
+  btn.className = 'domein-btn act-' + f;
+  renderMijnDag();
+}
+
+// ===== ACTIVITEITEN =====
+function renderActiviteiten() {
+  var cont = document.getElementById('actLijst'); cont.innerHTML = '';
+  var verg = db.vergaderingen.filter(function(v) { return actFilter === 'alle' || v.domein === actFilter; })
+    .sort(function(a,b) { return a.datum.localeCompare(b.datum) || a.start.localeCompare(b.start); });
+  var up = verg.filter(function(v) { return v.datum >= vandaag(); });
+  var pa = verg.filter(function(v) { return v.datum < vandaag(); }).reverse();
+  if (!up.length && !pa.length) {
+    cont.innerHTML = '<div class="empty"><i class="ti ti-calendar-off" style="font-size:28px;display:block;margin-bottom:8px"></i>Geen activiteiten.<br>Tik op "+ Nieuw" om er een toe te voegen.</div>';
+    return;
+  }
+  if (up.length) { var h = document.createElement('div'); h.className = 'section-label'; h.textContent = 'Aankomend'; cont.appendChild(h); up.forEach(function(v) { renderVergCard(v, cont); }); }
+  if (pa.length) { var h2 = document.createElement('div'); h2.className = 'section-label'; h2.textContent = 'Afgelopen'; cont.appendChild(h2); pa.forEach(function(v) { renderVergCard(v, cont); }); }
+}
+
+function renderVergCard(v, container) {
+  var di = domInfo(v.domein);
+  var heeftVerslag = db.verslagen.some(function(vs) { return vs.vergaderingId === v.id; });
+  var d = document.createElement('div'); d.className = 'card';
+  d.innerHTML = '<div class="meeting-row">' +
+    '<div class="meeting-icon ' + di.cls + '"><i class="ti ' + di.icon + '"></i></div>' +
+    '<div class="meeting-info">' +
+      '<div class="meeting-title">' + v.titel +
+        '<span class="badge ' + di.badge + '">' + di.label + '</span>' +
+        (v.organisatie ? '<span class="badge badge-gray">' + v.organisatie + '</span>' : '') +
+        (heeftVerslag ? '<span class="badge badge-green"><i class="ti ti-file-text" style="font-size:10px"></i></span>' : '') +
+        (v.vanNotion ? '<span class="badge badge-notion"><i class="ti ti-brand-notion" style="font-size:10px"></i> Gedeeld</span>' : '') +
+      '</div>' +
+      '<div class="meeting-meta">' +
+        '<span><i class="ti ti-calendar"></i>' + fmtDatum(v.datum) + '</span>' +
+        '<span><i class="ti ti-clock"></i>' + v.start + '-' + v.einde + '</span>' +
+        (v.locatie ? '<span><i class="ti ti-map-pin"></i>' + v.locatie + '</span>' : '') +
+        (v.deelnemers && v.deelnemers.length ? '<span><i class="ti ti-users"></i>' + v.deelnemers.length + '</span>' : '') +
+      '</div>' +
+    '</div>' +
+    '<div class="actions">' +
+      '<button class="icon-btn" onclick="stuurUitnodiging(' + v.id + ')" title="Uitnodigen"><i class="ti ti-send"></i></button>' +
+      '<button class="icon-btn" onclick="bewerkVerg(' + v.id + ')" title="Bewerken"><i class="ti ti-edit"></i></button>' +
+      '<button class="icon-btn" onclick="verwijderVerg(' + v.id + ')" title="Verwijderen"><i class="ti ti-trash"></i></button>' +
+    '</div></div>';
   container.appendChild(d);
 }
- 
-function renderStats(){
-  const g=document.getElementById('statsGrid');
-  const up=db.vergaderingen.filter(v=>v.datum>=vandaag()).length;
-  const openWP=db.werkpunten.filter(w=>w.status!=='klaar').length;
-  const verlopen=db.werkpunten.filter(w=>w.deadline&&w.deadline<vandaag()&&w.status!=='klaar').length;
-  g.innerHTML='<div class="stat"><div class="stat-n">'+db.vergaderingen.length+'</div><div class="stat-l">Tomeeto</div></div><div class="stat"><div class="stat-n">'+up+'</div><div class="stat-l">Aankomend</div></div><div class="stat"><div class="stat-n" style="color:'+(openWP>0?'#854F0B':'#27500A')+'">'+openWP+'</div><div class="stat-l">Open werkpunten</div></div><div class="stat"><div class="stat-n" style="color:'+(verlopen>0?'#A32D2D':'#27500A')+'">'+verlopen+'</div><div class="stat-l">Verlopen</div></div>';
+
+function setActFilter(f, btn) {
+  actFilter = f;
+  document.querySelectorAll('#actFilterBar .domein-btn').forEach(function(b) { b.className = 'domein-btn'; });
+  btn.className = 'domein-btn act-' + f;
+  renderActiviteiten();
 }
- 
-function checkDeadlines(){
-  const morgen=new Date();morgen.setDate(morgen.getDate()+1);
-  const morgenStr=morgen.toISOString().split('T')[0];
-  const dringend=db.werkpunten.filter(w=>w.status!=='klaar'&&w.deadline&&(w.deadline===vandaag()||w.deadline===morgenStr||w.deadline<vandaag()));
-  const banner=document.getElementById('notifBanner');
-  if(dringend.length){
-    banner.style.display='flex';
-    document.getElementById('notifTekst').textContent=dringend.length+' werkpunt'+(dringend.length>1?'en hebben':'heeft')+' een deadline vandaag of morgen!';
-  } else banner.style.display='none';
-}
- 
+
 // ===== FORMULIER =====
-function openForm(){editId=null;tempDeeln=[];document.getElementById('formModalTitle').textContent='Nieuwe vergadering';['fTitel','fLocatie','fOrg','fAgenda','fNotities','fEmails'].forEach(id=>document.getElementById(id).value='');document.getElementById('fDatum').value='';document.getElementById('fStart').value='09:00';document.getElementById('fEinde').value='10:00';document.getElementById('fType').value='intern';document.getElementById('fStatus').value='gepland';renderDeelChips();document.getElementById('formModal').classList.add('open');window.scrollTo(0,0);}
-function closeForm(){document.getElementById('formModal').classList.remove('open');}
-function bewerkVerg(id){const v=db.vergaderingen.find(x=>x.id===id);if(!v)return;editId=id;tempDeeln=[...v.deelnemers];document.getElementById('formModalTitle').textContent='Vergadering bewerken';document.getElementById('fTitel').value=v.titel;document.getElementById('fDatum').value=v.datum;document.getElementById('fStart').value=v.start;document.getElementById('fEinde').value=v.einde;document.getElementById('fLocatie').value=v.locatie;document.getElementById('fOrg').value=v.organisator;document.getElementById('fAgenda').value=v.agenda;document.getElementById('fNotities').value=v.notities;document.getElementById('fType').value=v.type;document.getElementById('fStatus').value=v.status||'gepland';document.getElementById('fEmails').value=v.emails||'';renderDeelChips();document.getElementById('formModal').classList.add('open');window.scrollTo(0,0);}
-function addDeelnemer(e){if(e.key==='Enter'){e.preventDefault();const v=e.target.value.trim();if(v&&!tempDeeln.includes(v)){tempDeeln.push(v);renderDeelChips();}e.target.value='';}}
-function renderDeelChips(){document.getElementById('fDeelChips').innerHTML=tempDeeln.map(n=>'<span class="chip">'+n+'<button onclick="verwijderDeeln(\''+n+'\')">x</button></span>').join('');}
-function verwijderDeeln(n){tempDeeln=tempDeeln.filter(x=>x!==n);renderDeelChips();}
-function slaVergaderingOp(){const titel=document.getElementById('fTitel').value.trim(),datum=document.getElementById('fDatum').value;if(!titel||!datum){alert('Vul onderwerp en datum in.');return;}const bestaand=editId?db.vergaderingen.find(x=>x.id===editId):null;const v={id:editId||(Date.now()),titel,datum,type:document.getElementById('fType').value,status:document.getElementById('fStatus').value,start:document.getElementById('fStart').value,einde:document.getElementById('fEinde').value,locatie:document.getElementById('fLocatie').value.trim(),organisator:document.getElementById('fOrg').value.trim(),deelnemers:[...tempDeeln],emails:document.getElementById('fEmails').value.trim(),agenda:document.getElementById('fAgenda').value.trim(),notities:document.getElementById('fNotities').value.trim()};if(editId){const i=db.vergaderingen.findIndex(x=>x.id===editId);if(i>=0)db.vergaderingen[i]=v;}else db.vergaderingen.push(v);slaOp();closeForm();renderLijst();}
-function verwijderVerg(id){if(confirm('Vergadering verwijderen?')){db.vergaderingen=db.vergaderingen.filter(x=>x.id!==id);slaOp();renderLijst();}}
- 
-// ===== OPNAME =====
-function vulOpnameSelect(){const sel=document.getElementById('opnameVerg'),huidig=sel.value;sel.innerHTML='<option value="">— kies vergadering —</option>';[...db.vergaderingen].sort((a,b)=>b.datum.localeCompare(a.datum)).forEach(v=>{sel.innerHTML+='<option value="'+v.id+'">'+fmtDatum(v.datum)+' — '+v.titel+'</option>';});if(huidig)sel.value=huidig;}
- 
-function laadOpnameVerg(){
-  const id=parseInt(document.getElementById('opnameVerg').value),card=document.getElementById('opnameCard');
-  if(!id){card.style.display='none';return;}
-  const v=db.vergaderingen.find(x=>x.id===id);
-  if(!v){card.style.display='none';return;}
-  card.style.display='block';
-  document.getElementById('opnameVergNaam').textContent=v.titel;
-  document.getElementById('opnameDatum').textContent=fmtDatum(v.datum)+' '+v.start+'-'+v.einde;
-  document.getElementById('opnameResultaat').style.display='none';
-  const bestaandVerslag=db.verslagen.find(vs=>vs.vergaderingId===id);
-  if(bestaandVerslag){
-    document.getElementById('opnameResultaat').style.display='block';
-    document.getElementById('verslagGegenereerd').style.display='block';
-    toonVerslagPreview(bestaandVerslag);
-    actieveVerslagId=bestaandVerslag.id;
-  } else {
-    document.getElementById('verslagGegenereerd').style.display='none';
+function openForm() {
+  editId = null; tempDeeln = [];
+  document.getElementById('formTitel').textContent = 'Nieuwe activiteit';
+  ['fTitel','fLocatie','fOrg','fAgenda','fNotities','fEmails','fOrganisatie'].forEach(function(id) { document.getElementById(id).value = ''; });
+  document.getElementById('fDatum').value = '';
+  document.getElementById('fStart').value = '09:00';
+  document.getElementById('fEinde').value = '10:00';
+  document.getElementById('fDomein').value = 'werk';
+  document.getElementById('fType').value = 'vergadering';
+  document.getElementById('fHerinnering').value = '';
+  document.getElementById('fNotion').checked = false;
+  renderDeelChips();
+  document.getElementById('formModal').classList.add('open');
+  window.scrollTo(0,0);
+}
+
+function closeForm() { document.getElementById('formModal').classList.remove('open'); }
+
+function bewerkVerg(id) {
+  var v = db.vergaderingen.find(function(x) { return x.id === id; }); if (!v) return;
+  editId = id; tempDeeln = (v.deelnemers || []).slice();
+  document.getElementById('formTitel').textContent = 'Activiteit bewerken';
+  document.getElementById('fTitel').value = v.titel;
+  document.getElementById('fDatum').value = v.datum;
+  document.getElementById('fStart').value = v.start;
+  document.getElementById('fEinde').value = v.einde;
+  document.getElementById('fLocatie').value = v.locatie || '';
+  document.getElementById('fOrg').value = v.organisator || '';
+  document.getElementById('fAgenda').value = v.agenda || '';
+  document.getElementById('fNotities').value = v.notities || '';
+  document.getElementById('fDomein').value = v.domein || 'werk';
+  document.getElementById('fType').value = v.type || 'vergadering';
+  document.getElementById('fEmails').value = v.emails || '';
+  document.getElementById('fOrganisatie').value = v.organisatie || '';
+  document.getElementById('fHerinnering').value = v.herinnering || '';
+  document.getElementById('fNotion').checked = false;
+  renderDeelChips();
+  document.getElementById('formModal').classList.add('open');
+  window.scrollTo(0,0);
+}
+
+function addDeelnemer(e) {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    var v = e.target.value.trim();
+    if (v && tempDeeln.indexOf(v) === -1) { tempDeeln.push(v); renderDeelChips(); }
+    e.target.value = '';
   }
 }
- 
-function startOpname(){navigator.mediaDevices.getUserMedia({audio:true}).then(stream=>{audioChunks=[];recSecs=0;mediaRec=new MediaRecorder(stream);mediaRec.ondataavailable=e=>{if(e.data.size>0)audioChunks.push(e.data);};mediaRec.onstop=()=>{audioBlob=new Blob(audioChunks,{type:'audio/webm'});document.getElementById('opnameResultaat').style.display='block';};mediaRec.start(1000);document.getElementById('btnStart').style.display='none';document.getElementById('btnStop').style.display='flex';document.getElementById('recDot').style.display='block';document.getElementById('recStatus').textContent='Opname bezig...';recInterval=setInterval(()=>{recSecs++;const m=Math.floor(recSecs/60),s=recSecs%60;document.getElementById('recTimer').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');document.getElementById('recFill').style.width=Math.min(recSecs/3600*100,100)+'%';},1000);}).catch(()=>alert('Microfoon toegang geweigerd.'));}
-function stopOpname(){if(mediaRec){mediaRec.stop();mediaRec.stream.getTracks().forEach(t=>t.stop());}clearInterval(recInterval);document.getElementById('recDot').style.display='none';document.getElementById('recStatus').textContent='Opname gestopt';document.getElementById('btnStop').style.display='none';document.getElementById('btnStart').style.display='flex';}
-function downloadOpname(){if(!audioBlob)return;const url=URL.createObjectURL(audioBlob),a=document.createElement('a');a.href=url;a.download='opname_'+new Date().toISOString().split('T')[0]+'.webm';a.click();URL.revokeObjectURL(url);}
- 
-async function genereerVerslag(){
-  const id=parseInt(document.getElementById('opnameVerg').value),v=db.vergaderingen.find(x=>x.id===id);
-  if(!v){alert('Selecteer eerst een vergadering.');return;}
-  const tekst=document.getElementById('transcriptInput').value.trim();
-  if(!tekst){alert('Plak eerst een transcript.');return;}
-  const prog=document.getElementById('verslagProgress'),fill=document.getElementById('verslagProgFill'),txt=document.getElementById('verslagProgTxt');
-  document.getElementById('btnGenereer').disabled=true;
-  prog.style.display='block';fill.style.width='15%';txt.textContent='Verbinden met AI...';
-  try{
-    fill.style.width='40%';txt.textContent='AI analyseert de vergadering...';
-    const resp=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:2000,messages:[{role:'user',content:`Je bent een professionele notulist. Analyseer dit transcript en maak een gestructureerd vergaderverslag in het Nederlands.
- 
-Vergadering: ${v.titel}
-Datum: ${fmtDatum(v.datum)} | ${v.start}-${v.einde}
-Deelnemers: ${v.deelnemers.join(', ')||'niet opgegeven'}
- 
-TRANSCRIPT:
-${tekst}
- 
-Geef je antwoord EXACT in dit JSON-formaat (niets anders, geen uitleg):
-{
-  "samenvatting": "2-3 zinnen die de essentie beschrijven",
-  "besprokenPunten": ["punt 1", "punt 2"],
-  "beslissingen": ["beslissing 1"],
-  "werkpunten": [
-    {
-      "taak": "wat moet gedaan worden",
-      "verantwoordelijke": "naam (of 'Niet toegewezen')",
-      "deadline": "YYYY-MM-DD of null",
-      "prioriteit": "hoog of normaal of laag"
-    }
-  ],
-  "volgendePunten": "tekst over volgende stappen of null"
-}`}]})});
-    fill.style.width='80%';txt.textContent='Verslag opmaken...';
-    const data=await resp.json();
-    let raw=data.content&&data.content[0]?data.content[0].text:'{}';
-    raw=raw.replace(/```json|```/g,'').trim();
-    let parsed;
-    try{parsed=JSON.parse(raw);}catch(e){parsed={samenvatting:raw,besprokenPunten:[],beslissingen:[],werkpunten:[],volgendePunten:null};}
- 
-    // Sla verslag op
-    const verslagId=Date.now();
-    const verslag={id:verslagId,vergaderingId:id,vergaderingTitel:v.titel,datum:v.datum,aangemaakt:new Date().toISOString(),samenvatting:parsed.samenvatting||'',besprokenPunten:parsed.besprokenPunten||[],beslissingen:parsed.beslissingen||[],volgendePunten:parsed.volgendePunten||'',transcript:tekst};
-    // Verwijder oud verslag van deze vergadering
-    db.verslagen=db.verslagen.filter(vs=>vs.vergaderingId!==id);
-    db.verslagen.push(verslag);
-    actieveVerslagId=verslagId;
- 
-    // Sla werkpunten op
-    db.werkpunten=db.werkpunten.filter(w=>w.vergaderingId!==id);
-    (parsed.werkpunten||[]).forEach(wp=>{
-      db.werkpunten.push({id:Date.now()+Math.random(),vergaderingId:id,vergaderingTitel:v.titel,taak:wp.taak,verantwoordelijke:wp.verantwoordelijke||'Niet toegewezen',deadline:wp.deadline||null,prioriteit:wp.prioriteit||'normaal',status:'toebedeeld',aangemaakt:new Date().toISOString()});
+
+function renderDeelChips() {
+  document.getElementById('fDeelChips').innerHTML = tempDeeln.map(function(n) {
+    return '<span class="chip">' + n + '<button onclick="verwijderDeeln(\'' + n + '\')">x</button></span>';
+  }).join('');
+}
+
+function verwijderDeeln(n) { tempDeeln = tempDeeln.filter(function(x) { return x !== n; }); renderDeelChips(); }
+
+function verwijderVerg(id) {
+  if (confirm('Activiteit verwijderen?')) {
+    db.vergaderingen = db.vergaderingen.filter(function(x) { return x.id !== id; });
+    bewaarDb(); renderActiviteiten();
+  }
+}
+
+function slaOp2() {
+  var titel = document.getElementById('fTitel').value.trim();
+  var datum = document.getElementById('fDatum').value;
+  if (!titel || !datum) { alert('Vul naam en datum in.'); return; }
+  var start = document.getElementById('fStart').value;
+  var einde = document.getElementById('fEinde').value;
+  var deelNotion = document.getElementById('fNotion').checked;
+
+  // Conflictdetectie
+  var conflicten = db.vergaderingen.filter(function(v) {
+    if (editId && v.id === editId) return false;
+    if (v.datum !== datum) return false;
+    return start < v.einde && einde > v.start;
+  });
+  if (conflicten.length) {
+    var namen = conflicten.map(function(v) { return v.titel + ' (' + v.start + '-' + v.einde + ')'; }).join(', ');
+    if (!confirm('Tijdsconflict!\n\nOverlapt met: ' + namen + '\n\nToch opslaan?')) return;
+  }
+
+  var v = {
+    id: editId || Date.now(),
+    titel: titel, datum: datum,
+    domein: document.getElementById('fDomein').value,
+    type: document.getElementById('fType').value,
+    organisatie: document.getElementById('fOrganisatie').value.trim(),
+    start: start, einde: einde,
+    locatie: document.getElementById('fLocatie').value.trim(),
+    organisator: document.getElementById('fOrg').value.trim(),
+    deelnemers: tempDeeln.slice(),
+    emails: document.getElementById('fEmails').value.trim(),
+    agenda: document.getElementById('fAgenda').value.trim(),
+    notities: document.getElementById('fNotities').value.trim(),
+    herinnering: document.getElementById('fHerinnering').value,
+    gedeeldNotion: deelNotion, vanNotion: false
+  };
+
+  if (editId) {
+    var i = db.vergaderingen.findIndex(function(x) { return x.id === editId; });
+    if (i >= 0) db.vergaderingen[i] = v;
+  } else {
+    db.vergaderingen.push(v);
+  }
+  if (v.herinnering) planHerinnering(v);
+  bewaarDb(); closeForm(); renderActiviteiten();
+  if (deelNotion) deelNaarNotion(v);
+}
+
+// ===== HERINNERING =====
+function planHerinnering(v) {
+  if (!('Notification' in window) || Notification.permission !== 'granted') return;
+  var dt = new Date(v.datum + 'T' + v.start + ':00');
+  var min = parseInt(v.herinnering) || 30;
+  var herinnerTijd = new Date(dt.getTime() - min * 60000);
+  var msNog = herinnerTijd.getTime() - Date.now();
+  if (msNog > 0 && msNog < 7 * 24 * 60 * 60 * 1000) {
+    setTimeout(function() {
+      new Notification('Comtomeet herinnering', { body: 'Over ' + min + ' min: ' + v.titel + (v.locatie ? ' (' + v.locatie + ')' : ''), icon: 'icon.svg' });
+    }, msNog);
+  }
+}
+
+// ===== UITNODIGING =====
+function stuurUitnodiging(id) {
+  var v = db.vergaderingen.find(function(x) { return x.id === id; }); if (!v) return;
+  var agenda = v.agenda ? v.agenda.split('\n').filter(Boolean).map(function(l,i) { return (i+1) + '. ' + l; }).join('\n') : '';
+  var body = 'Uitnodiging: ' + v.titel + '\n\nDatum: ' + fmtDatum(v.datum) + '\nTijdstip: ' + v.start + ' - ' + v.einde + '\nLocatie: ' + (v.locatie || 'nader te bepalen') + '\nOrganisator: ' + (v.organisator || '') + '\n\nAgenda:\n' + (agenda || 'zie uitnodiging') + '\n\nGraag bevestiging.\nMet vriendelijke groeten,\n' + (v.organisator || '');
+  var emails = (v.emails || '').split(',').map(function(e) { return e.trim(); }).filter(Boolean).join(',');
+  window.open('mailto:' + emails + '?subject=' + encodeURIComponent('Uitnodiging: ' + v.titel) + '&body=' + encodeURIComponent(body));
+}
+
+// ===== NOTION SYNC =====
+function showSync(tekst) {
+  var b = document.getElementById('syncBanner');
+  b.style.display = 'flex';
+  document.getElementById('syncTxt').textContent = tekst;
+}
+function hideSync() { setTimeout(function() { document.getElementById('syncBanner').style.display = 'none'; }, 2500); }
+
+async function deelNaarNotion(v) {
+  showSync('Activiteit delen via Notion...');
+  try {
+    var domeinLabel = v.domein === 'werk' ? 'Werk' : v.domein === 'prive' ? 'Prive' : 'Sociocultureel';
+    var resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 500,
+        mcp_servers: [{ type: 'url', url: 'https://mcp.notion.com/mcp', name: 'notion' }],
+        messages: [{ role: 'user', content: 'Voeg een nieuwe activiteit toe aan de Notion database met id ' + NOTION_DB_ID + '.\n\nGegevens:\n- Naam: ' + v.titel + '\n- Datum: ' + v.datum + '\n- Starttijd: ' + v.start + '\n- Eindtijd: ' + v.einde + '\n- Domein: ' + domeinLabel + '\n- Locatie: ' + (v.locatie || '') + '\n- Organisatie: ' + (v.organisatie || '') + '\n- Organisator: ' + (v.organisator || '') + '\n- Deelnemers: ' + (v.deelnemers.join(', ') || '') + '\n- Agenda: ' + (v.agenda || '') + '\n- Gedeeld door: ' + (localStorage.getItem('comtomeet_naam') || 'Onbekend') + '\n- Status: Gepland\n\nVoeg toe als nieuwe pagina.' }]
+      })
     });
-    slaOp();
- 
-    document.getElementById('verslagGegenereerd').style.display='block';
+    document.getElementById('syncTxt').textContent = 'Gedeeld via Notion!';
+    hideSync();
+  } catch(err) {
+    document.getElementById('syncTxt').textContent = 'Fout bij Notion';
+    hideSync();
+  }
+}
+
+async function laadVanNotion() {
+  showSync('Gedeelde activiteiten laden...');
+  try {
+    var resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 2000,
+        mcp_servers: [{ type: 'url', url: 'https://mcp.notion.com/mcp', name: 'notion' }],
+        messages: [{ role: 'user', content: 'Haal alle paginas op uit de Notion database met id ' + NOTION_DB_ID + ' waar de datum groter is dan vandaag (' + vandaag() + ').\n\nGeef de resultaten terug als JSON array:\n[{"titel":"","datum":"YYYY-MM-DD","start":"HH:MM","einde":"HH:MM","domein":"werk","locatie":"","organisatie":"","organisator":"","deelnemers":"","agenda":"","gedeeldDoor":""}]\n\nVertaal Domein: "Werk"->werk, "Prive"->prive, "Sociocultureel"->socio.\nAntwoord ALLEEN met de JSON array.' }]
+      })
+    });
+    var data = await resp.json();
+    var raw = (data.content && data.content[0]) ? data.content[0].text : '[]';
+    raw = raw.replace(/```json|```/g, '').trim();
+    var activiteiten;
+    try { activiteiten = JSON.parse(raw); } catch(e) { activiteiten = []; }
+    var toegevoegd = 0;
+    activiteiten.forEach(function(a) {
+      var bestaat = db.vergaderingen.some(function(v) { return v.titel === a.titel && v.datum === a.datum && v.vanNotion; });
+      if (!bestaat && a.titel && a.datum) {
+        db.vergaderingen.push({
+          id: Date.now() + Math.random(),
+          titel: a.titel, datum: a.datum,
+          domein: a.domein || 'werk', type: 'vergadering',
+          organisatie: a.organisatie || '',
+          start: a.start || '09:00', einde: a.einde || '10:00',
+          locatie: a.locatie || '', organisator: a.organisator || '',
+          deelnemers: a.deelnemers ? a.deelnemers.split(',').map(function(x) { return x.trim(); }).filter(Boolean) : [],
+          emails: '', agenda: a.agenda || '',
+          notities: 'Gedeeld door: ' + (a.gedeeldDoor || 'team'),
+          herinnering: '', gedeeldNotion: false, vanNotion: true
+        });
+        toegevoegd++;
+      }
+    });
+    bewaarDb();
+    document.getElementById('syncTxt').textContent = toegevoegd + ' activiteit' + (toegevoegd !== 1 ? 'en' : '') + ' geladen!';
+    hideSync();
+    renderMijnDag(); renderActiviteiten();
+  } catch(err) {
+    document.getElementById('syncTxt').textContent = 'Fout bij laden';
+    hideSync();
+  }
+}
+
+// ===== OPNAME =====
+function vulOpnameSelect() {
+  var sel = document.getElementById('opnameVerg'), huidig = sel.value;
+  sel.innerHTML = '<option value="">-- kies activiteit --</option>';
+  db.vergaderingen.slice().sort(function(a,b) { return b.datum.localeCompare(a.datum); }).forEach(function(v) {
+    sel.innerHTML += '<option value="' + v.id + '">' + fmtDatum(v.datum) + ' - ' + v.titel + '</option>';
+  });
+  if (huidig) sel.value = huidig;
+}
+
+function laadOpnameVerg() {
+  var id = parseInt(document.getElementById('opnameVerg').value);
+  var card = document.getElementById('opnameCard');
+  if (!id) { card.style.display = 'none'; return; }
+  var v = db.vergaderingen.find(function(x) { return x.id === id; });
+  if (!v) { card.style.display = 'none'; return; }
+  card.style.display = 'block';
+  document.getElementById('opnameNaam').textContent = v.titel;
+  document.getElementById('opnameDatum').textContent = fmtDatum(v.datum) + ' ' + v.start + '-' + v.einde;
+  document.getElementById('opnameResultaat').style.display = 'none';
+  var bv = db.verslagen.find(function(vs) { return vs.vergaderingId === id; });
+  if (bv) { document.getElementById('opnameResultaat').style.display = 'block'; document.getElementById('verslagGegenereerd').style.display = 'block'; toonVerslagPreview(bv); actieveVerslagId = bv.id; }
+  else document.getElementById('verslagGegenereerd').style.display = 'none';
+}
+
+function startOpname() {
+  navigator.mediaDevices.getUserMedia({ audio: true }).then(function(stream) {
+    audioChunks = []; recSecs = 0;
+    mediaRec = new MediaRecorder(stream);
+    mediaRec.ondataavailable = function(e) { if (e.data.size > 0) audioChunks.push(e.data); };
+    mediaRec.onstop = function() { audioBlob = new Blob(audioChunks, { type: 'audio/webm' }); document.getElementById('opnameResultaat').style.display = 'block'; };
+    mediaRec.start(1000);
+    document.getElementById('btnStart').style.display = 'none';
+    document.getElementById('btnStop').style.display = 'flex';
+    document.getElementById('recDot').style.display = 'block';
+    document.getElementById('recStatus').textContent = 'Opname bezig...';
+    recInterval = setInterval(function() {
+      recSecs++;
+      var m = Math.floor(recSecs/60), s = recSecs % 60;
+      document.getElementById('recTimer').textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+      document.getElementById('recFill').style.width = Math.min(recSecs/3600*100, 100) + '%';
+    }, 1000);
+  }).catch(function() { alert('Microfoon toegang geweigerd.'); });
+}
+
+function stopOpname() {
+  if (mediaRec) { mediaRec.stop(); mediaRec.stream.getTracks().forEach(function(t) { t.stop(); }); }
+  clearInterval(recInterval);
+  document.getElementById('recDot').style.display = 'none';
+  document.getElementById('recStatus').textContent = 'Opname gestopt';
+  document.getElementById('btnStop').style.display = 'none';
+  document.getElementById('btnStart').style.display = 'flex';
+}
+
+function downloadOpname() {
+  if (!audioBlob) return;
+  var url = URL.createObjectURL(audioBlob), a = document.createElement('a');
+  a.href = url; a.download = 'opname_' + vandaag() + '.webm'; a.click();
+  URL.revokeObjectURL(url);
+}
+
+async function genereerVerslag() {
+  var id = parseInt(document.getElementById('opnameVerg').value);
+  var v = db.vergaderingen.find(function(x) { return x.id === id; });
+  if (!v) { alert('Selecteer eerst een activiteit.'); return; }
+  var tekst = document.getElementById('transcriptInput').value.trim();
+  if (!tekst) { alert('Plak eerst een transcript.'); return; }
+  var prog = document.getElementById('verslagProgress');
+  var fill = document.getElementById('verslagProgFill');
+  var txt = document.getElementById('verslagProgTxt');
+  document.getElementById('btnGenereer').disabled = true;
+  prog.style.display = 'block'; fill.style.width = '15%'; txt.textContent = 'Verbinden met AI...';
+  try {
+    fill.style.width = '40%'; txt.textContent = 'AI analyseert...';
+    var resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514', max_tokens: 2000,
+        messages: [{ role: 'user', content: 'Je bent een professionele notulist. Analyseer dit transcript en maak een gestructureerd verslag in het Nederlands.\n\nActiviteit: ' + v.titel + '\nDatum: ' + fmtDatum(v.datum) + ' | ' + v.start + '-' + v.einde + '\nDeelnemers: ' + ((v.deelnemers || []).join(', ') || 'niet opgegeven') + '\n\nTRANSCRIPT:\n' + tekst + '\n\nGeef je antwoord EXACT in dit JSON-formaat:\n{"samenvatting":"2-3 zinnen","besprokenPunten":["punt 1"],"beslissingen":["beslissing 1"],"werkpunten":[{"taak":"wat","verantwoordelijke":"naam","deadline":"YYYY-MM-DD of null","prioriteit":"hoog of normaal of laag"}],"volgendePunten":"tekst of null"}' }]
+      })
+    });
+    fill.style.width = '80%'; txt.textContent = 'Verslag opmaken...';
+    var data = await resp.json();
+    var raw = (data.content && data.content[0]) ? data.content[0].text : '{}';
+    raw = raw.replace(/```json|```/g, '').trim();
+    var parsed; try { parsed = JSON.parse(raw); } catch(e) { parsed = { samenvatting: raw, besprokenPunten: [], beslissingen: [], werkpunten: [], volgendePunten: null }; }
+    var verslagId = Date.now();
+    var verslag = { id: verslagId, vergaderingId: id, vergaderingTitel: v.titel, domein: v.domein, organisatie: v.organisatie || '', datum: v.datum, aangemaakt: new Date().toISOString(), samenvatting: parsed.samenvatting || '', besprokenPunten: parsed.besprokenPunten || [], beslissingen: parsed.beslissingen || [], volgendePunten: parsed.volgendePunten || '', transcript: tekst };
+    db.verslagen = db.verslagen.filter(function(vs) { return vs.vergaderingId !== id; });
+    db.verslagen.push(verslag);
+    actieveVerslagId = verslagId;
+    db.werkpunten = db.werkpunten.filter(function(w) { return w.vergaderingId !== id; });
+    (parsed.werkpunten || []).forEach(function(wp) {
+      db.werkpunten.push({ id: Date.now() + Math.random(), vergaderingId: id, vergaderingTitel: v.titel, domein: v.domein, taak: wp.taak, verantwoordelijke: wp.verantwoordelijke || 'Niet toegewezen', deadline: wp.deadline || null, prioriteit: wp.prioriteit || 'normaal', status: 'toebedeeld', aangemaakt: new Date().toISOString() });
+    });
+    bewaarDb();
+    document.getElementById('verslagGegenereerd').style.display = 'block';
     toonVerslagPreview(verslag);
-    fill.style.width='100%';txt.textContent='Klaar!';
-    setTimeout(()=>{prog.style.display='none';document.getElementById('btnGenereer').disabled=false;},1500);
- 
-    // Browser notificatie aanvragen
-    if('Notification' in window&&Notification.permission==='default')Notification.requestPermission();
- 
-  }catch(err){prog.style.display='none';document.getElementById('btnGenereer').disabled=false;alert('Fout: '+err.message);}
+    fill.style.width = '100%'; txt.textContent = 'Klaar!';
+    setTimeout(function() { prog.style.display = 'none'; document.getElementById('btnGenereer').disabled = false; }, 1500);
+  } catch(err) {
+    prog.style.display = 'none'; document.getElementById('btnGenereer').disabled = false;
+    alert('Fout: ' + err.message);
+  }
 }
- 
-function toonVerslagPreview(verslag){
-  const el=document.getElementById('verslagPreview');
-  const wpCount=db.werkpunten.filter(w=>w.vergaderingId===verslag.vergaderingId).length;
-  el.innerHTML='<div class="samenvatting-blok"><h3>Samenvatting</h3><p>'+verslag.samenvatting+'</p></div><div style="font-size:13px;color:#666"><i class="ti ti-checkbox"></i> '+wpCount+' werkpunt'+(wpCount!==1?'en':'')+'  &nbsp;·&nbsp; <i class="ti ti-calendar"></i> '+fmtDatum(verslag.datum)+'</div>';
+
+function toonVerslagPreview(verslag) {
+  var wpCount = db.werkpunten.filter(function(w) { return w.vergaderingId === verslag.vergaderingId; }).length;
+  document.getElementById('verslagPreview').innerHTML = '<div class="samenvatting-blok"><h3>Samenvatting</h3><p>' + verslag.samenvatting + '</p></div><div style="font-size:13px;color:#666"><i class="ti ti-checkbox"></i> ' + wpCount + ' werkpunt' + (wpCount !== 1 ? 'en' : '') + '</div>';
 }
- 
-function toonVerslagOpname(){
-  const verslag=db.verslagen.find(vs=>vs.id===actieveVerslagId);
-  if(verslag)openVerslagModal(verslag);
-}
- 
-function deelVerslagOpname(){
-  const verslag=db.verslagen.find(vs=>vs.id===actieveVerslagId);
-  if(verslag)stuurVerslagMail(verslag);
-}
- 
+function toonVerslagOpname() { var v = db.verslagen.find(function(vs) { return vs.id === actieveVerslagId; }); if (v) openVerslagModal(v); }
+function deelVerslagOpname() { var v = db.verslagen.find(function(vs) { return vs.id === actieveVerslagId; }); if (v) stuurVerslagMail(v); }
+
 // ===== BIBLIOTHEEK =====
-function renderBibliotheek(){
-  const cont=document.getElementById('bibliLijst');
-  cont.innerHTML='';
-  if(!db.verslagen.length){cont.innerHTML='<div class="empty"><i class="ti ti-books" style="font-size:28px;display:block;margin-bottom:8px"></i>Nog geen verslagen opgeslagen.<br>Genereer een verslag via het Opname-tabblad.</div>';return;}
-  const sorted=[...db.verslagen].sort((a,b)=>b.datum.localeCompare(a.datum));
-  sorted.forEach(vs=>{
-    const wpCount=db.werkpunten.filter(w=>w.vergaderingId===vs.vergaderingId).length;
-    const openWP=db.werkpunten.filter(w=>w.vergaderingId===vs.vergaderingId&&w.status!=='klaar').length;
-    const d=document.createElement('div');
-    d.className='bibl-card';
-    d.innerHTML='<div style="display:flex;justify-content:space-between;align-items:flex-start"><div style="flex:1"><div class="bibl-card-title">'+vs.vergaderingTitel+'</div><div class="bibl-card-meta"><span><i class="ti ti-calendar"></i>'+fmtDatum(vs.datum)+'</span><span><i class="ti ti-checkbox"></i>'+wpCount+' werkpunten</span>'+(openWP?'<span class="badge badge-orange">'+openWP+' open</span>':'<span class="badge badge-green">Alles klaar</span>')+'</div><div style="font-size:13px;color:#666;margin-top:6px;line-height:1.4">'+vs.samenvatting.substring(0,120)+(vs.samenvatting.length>120?'...':'')+'</div></div><div style="display:flex;flex-direction:column;gap:4px;margin-left:8px"><button class="icon-btn" onclick="openVerslagModal(db.verslagen.find(x=>x.id==='+vs.id+'))" title="Bekijken"><i class="ti ti-eye"></i></button><button class="icon-btn" onclick="stuurVerslagMail(db.verslagen.find(x=>x.id==='+vs.id+'))" title="Delen via e-mail"><i class="ti ti-mail"></i></button><button class="icon-btn btn-danger" onclick="verwijderVerslag('+vs.id+')" title="Verwijderen"><i class="ti ti-trash"></i></button></div></div>';
+function renderBibliotheek() {
+  var cont = document.getElementById('bibliLijst'); cont.innerHTML = '';
+  if (!db.verslagen.length) { cont.innerHTML = '<div class="empty"><i class="ti ti-books" style="font-size:28px;display:block;margin-bottom:8px"></i>Nog geen verslagen.<br>Genereer een verslag via het Opname-tabblad.</div>'; return; }
+  db.verslagen.slice().sort(function(a,b) { return b.datum.localeCompare(a.datum); }).forEach(function(vs) {
+    var di = domInfo(vs.domein || 'werk');
+    var wpCount = db.werkpunten.filter(function(w) { return w.vergaderingId === vs.vergaderingId; }).length;
+    var openWP = db.werkpunten.filter(function(w) { return w.vergaderingId === vs.vergaderingId && w.status !== 'klaar'; }).length;
+    var d = document.createElement('div'); d.className = 'bibl-card';
+    d.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:flex-start">' +
+      '<div style="flex:1">' +
+        '<div style="font-size:15px;font-weight:500;margin-bottom:4px">' + vs.vergaderingTitel + '</div>' +
+        '<div style="font-size:12px;color:#666;display:flex;gap:8px;flex-wrap:wrap;margin-bottom:6px">' +
+          '<span><i class="ti ti-calendar"></i>' + fmtDatum(vs.datum) + '</span>' +
+          '<span class="badge ' + di.badge + '">' + di.label + '</span>' +
+          (vs.organisatie ? '<span class="badge badge-gray">' + vs.organisatie + '</span>' : '') +
+          '<span><i class="ti ti-checkbox"></i>' + wpCount + ' wp</span>' +
+          (openWP ? '<span class="badge badge-orange">' + openWP + ' open</span>' : '<span class="badge badge-green">Klaar</span>') +
+        '</div>' +
+        '<div style="font-size:13px;color:#666;line-height:1.4">' + vs.samenvatting.substring(0, 120) + (vs.samenvatting.length > 120 ? '...' : '') + '</div>' +
+      '</div>' +
+      '<div style="display:flex;flex-direction:column;gap:4px;margin-left:8px">' +
+        '<button class="icon-btn" onclick="openVerslagModal(db.verslagen.find(function(x){return x.id===' + vs.id + '}))" title="Bekijken"><i class="ti ti-eye"></i></button>' +
+        '<button class="icon-btn" onclick="stuurVerslagMail(db.verslagen.find(function(x){return x.id===' + vs.id + '}))" title="Delen"><i class="ti ti-mail"></i></button>' +
+        '<button class="icon-btn" onclick="verwijderVerslag(' + vs.id + ')" title="Verwijderen"><i class="ti ti-trash"></i></button>' +
+      '</div></div>';
     cont.appendChild(d);
   });
 }
- 
-function openVerslagModal(verslag){
-  if(!verslag)return;
-  const wps=db.werkpunten.filter(w=>w.vergaderingId===verslag.vergaderingId);
-  let html='<div class="verslag-detail">';
-  html+='<h2>'+verslag.vergaderingTitel+'</h2>';
-  html+='<div class="meta"><i class="ti ti-calendar"></i> '+fmtDatum(verslag.datum)+'</div>';
-  html+='<div class="samenvatting-blok"><h3>Samenvatting</h3><p>'+verslag.samenvatting+'</p></div>';
-  if(verslag.besprokenPunten&&verslag.besprokenPunten.length){
-    html+='<div class="section-label">Besproken punten</div><ul style="padding-left:18px;font-size:14px;line-height:1.8">';
-    verslag.besprokenPunten.forEach(p=>{html+='<li>'+p+'</li>';});
-    html+='</ul>';
-  }
-  if(verslag.beslissingen&&verslag.beslissingen.length){
-    html+='<div class="section-label">Beslissingen</div><ul style="padding-left:18px;font-size:14px;line-height:1.8">';
-    verslag.beslissingen.forEach(b=>{html+='<li>'+b+'</li>';});
-    html+='</ul>';
-  }
-  if(wps.length){
-    html+='<div class="section-label">Werkpunten ('+wps.length+')</div>';
-    wps.forEach(w=>{
-      const dlKlasse=!w.deadline?'':w.status==='klaar'?'dl-ok':w.deadline<vandaag()?'dl-verlopen':w.deadline<=new Date(Date.now()+3*86400000).toISOString().split('T')[0]?'dl-soon':'dl-ok';
-      html+='<div class="werkpunt-card status-'+w.status+'"><div class="werkpunt-header"><div class="werkpunt-tekst"><strong>'+w.taak+'</strong><div style="font-size:12px;color:#666;margin-top:2px"><i class="ti ti-user"></i> '+w.verantwoordelijke+'</div></div></div><div class="werkpunt-meta"><select class="status-select" onchange="updateWPStatus(\''+w.id+'\',this.value)"><option value="toebedeeld"'+(w.status==='toebedeeld'?' selected':'')+'>Toebedeeld</option><option value="progress"'+(w.status==='progress'?' selected':'')+'>In progress</option><option value="klaar"'+(w.status==='klaar'?' selected':'')+'>Klaar</option></select>'+(w.deadline?'<span class="deadline-badge '+dlKlasse+'"><i class="ti ti-calendar-due"></i>'+fmtDatum(w.deadline)+'</span>':'')+'<span class="badge badge-'+(w.prioriteit==='hoog'?'red':w.prioriteit==='laag'?'gray':'blue')+'">'+w.prioriteit+'</span></div></div>';
+
+function openVerslagModal(verslag) {
+  if (!verslag) return;
+  var wps = db.werkpunten.filter(function(w) { return w.vergaderingId === verslag.vergaderingId; });
+  var html = '<div><h2 style="font-size:17px;font-weight:600;margin-bottom:4px">' + verslag.vergaderingTitel + '</h2><div style="font-size:13px;color:#666;margin-bottom:14px"><i class="ti ti-calendar"></i> ' + fmtDatum(verslag.datum) + (verslag.organisatie ? ' &nbsp;·&nbsp; ' + verslag.organisatie : '') + '</div>';
+  html += '<div class="samenvatting-blok"><h3>Samenvatting</h3><p>' + verslag.samenvatting + '</p></div>';
+  if (verslag.besprokenPunten && verslag.besprokenPunten.length) { html += '<div class="section-label">Besproken punten</div><ul style="padding-left:18px;font-size:14px;line-height:1.8">'; verslag.besprokenPunten.forEach(function(p) { html += '<li>' + p + '</li>'; }); html += '</ul>'; }
+  if (verslag.beslissingen && verslag.beslissingen.length) { html += '<div class="section-label">Beslissingen</div><ul style="padding-left:18px;font-size:14px;line-height:1.8">'; verslag.beslissingen.forEach(function(b) { html += '<li>' + b + '</li>'; }); html += '</ul>'; }
+  if (wps.length) {
+    html += '<div class="section-label">Werkpunten (' + wps.length + ')</div>';
+    wps.forEach(function(w) {
+      var dlK = !w.deadline ? '' : w.status === 'klaar' ? 'dl-ok' : w.deadline < vandaag() ? 'dl-verlopen' : w.deadline <= new Date(Date.now()+3*86400000).toISOString().split('T')[0] ? 'dl-soon' : 'dl-ok';
+      html += '<div class="werkpunt-card status-' + w.status + '"><div class="werkpunt-header"><div class="werkpunt-tekst"><strong>' + w.taak + '</strong><div style="font-size:12px;color:#666;margin-top:2px"><i class="ti ti-user"></i> ' + w.verantwoordelijke + '</div></div></div><div class="werkpunt-meta"><select class="status-select" onchange="updateWPStatus(\'' + w.id + '\',this.value)"><option value="toebedeeld"' + (w.status === 'toebedeeld' ? ' selected' : '') + '>Toebedeeld</option><option value="progress"' + (w.status === 'progress' ? ' selected' : '') + '>In progress</option><option value="klaar"' + (w.status === 'klaar' ? ' selected' : '') + '>Klaar</option></select>' + (w.deadline ? '<span class="deadline-badge ' + dlK + '"><i class="ti ti-calendar-due"></i>' + fmtDatum(w.deadline) + '</span>' : '') + '</div></div>';
     });
   }
-  if(verslag.volgendePunten){html+='<div class="section-label">Volgende stappen</div><p style="font-size:14px;line-height:1.6">'+verslag.volgendePunten+'</p>';}
-  html+='</div>';
-  document.getElementById('verslagModalInhoud').innerHTML=html;
-  document.getElementById('verslagModal').dataset.verslagId=verslag.id;
+  if (verslag.volgendePunten) { html += '<div class="section-label">Volgende stappen</div><p style="font-size:14px;line-height:1.6">' + verslag.volgendePunten + '</p>'; }
+  html += '</div>';
+  document.getElementById('verslagModalInhoud').innerHTML = html;
+  document.getElementById('verslagModal').dataset.verslagId = verslag.id;
   document.getElementById('verslagModal').classList.add('open');
   window.scrollTo(0,0);
 }
- 
-function sluitVerslagModal(){document.getElementById('verslagModal').classList.remove('open');}
- 
-function deelVerslag(){
-  const id=parseInt(document.getElementById('verslagModal').dataset.verslagId);
-  const verslag=db.verslagen.find(x=>x.id===id);
-  if(verslag)stuurVerslagMail(verslag);
+
+function sluitVerslagModal() { document.getElementById('verslagModal').classList.remove('open'); }
+function deelVerslag() { var id = parseInt(document.getElementById('verslagModal').dataset.verslagId); var v = db.verslagen.find(function(x) { return x.id === id; }); if (v) stuurVerslagMail(v); }
+
+function stuurVerslagMail(verslag) {
+  if (!verslag) return;
+  var verg = db.vergaderingen.find(function(x) { return x.id === verslag.vergaderingId; });
+  var emails = verg ? (verg.emails || '').split(',').map(function(e) { return e.trim(); }).filter(Boolean).join(',') : '';
+  var wps = db.werkpunten.filter(function(w) { return w.vergaderingId === verslag.vergaderingId; });
+  var body = 'VERSLAG - ' + verslag.vergaderingTitel + '\nDatum: ' + fmtDatum(verslag.datum) + '\n\nSAMENVATTING\n' + verslag.samenvatting + '\n\n';
+  if (verslag.besprokenPunten && verslag.besprokenPunten.length) { body += 'BESPROKEN PUNTEN\n'; verslag.besprokenPunten.forEach(function(p,i) { body += (i+1) + '. ' + p + '\n'; }); body += '\n'; }
+  if (verslag.beslissingen && verslag.beslissingen.length) { body += 'BESLISSINGEN\n'; verslag.beslissingen.forEach(function(b,i) { body += (i+1) + '. ' + b + '\n'; }); body += '\n'; }
+  if (wps.length) { body += 'WERKPUNTEN\n'; wps.forEach(function(w) { body += '- ' + w.taak + ' | ' + w.verantwoordelijke + (w.deadline ? ' | ' + fmtDatum(w.deadline) : '') + '\n'; }); body += '\n'; }
+  if (verslag.volgendePunten) body += 'VOLGENDE STAPPEN\n' + verslag.volgendePunten;
+  window.open('mailto:' + emails + '?subject=' + encodeURIComponent('Verslag: ' + verslag.vergaderingTitel + ' - ' + fmtDatum(verslag.datum)) + '&body=' + encodeURIComponent(body));
 }
- 
-function stuurVerslagMail(verslag){
-  if(!verslag)return;
-  const verg=db.vergaderingen.find(x=>x.id===verslag.vergaderingId);
-  const emails=verg?(verg.emails||'').split(',').map(e=>e.trim()).filter(Boolean).join(','):'';
-  const wps=db.werkpunten.filter(w=>w.vergaderingId===verslag.vergaderingId);
-  let body='VERGADERVERSLAG\n'+verslag.vergaderingTitel+'\nDatum: '+fmtDatum(verslag.datum)+'\n\n';
-  body+='SAMENVATTING\n'+verslag.samenvatting+'\n\n';
-  if(verslag.besprokenPunten&&verslag.besprokenPunten.length){body+='BESPROKEN PUNTEN\n';verslag.besprokenPunten.forEach((p,i)=>{body+=(i+1)+'. '+p+'\n';});body+='\n';}
-  if(verslag.beslissingen&&verslag.beslissingen.length){body+='BESLISSINGEN\n';verslag.beslissingen.forEach((b,i)=>{body+=(i+1)+'. '+b+'\n';});body+='\n';}
-  if(wps.length){body+='WERKPUNTEN & AFSPRAKEN\n';wps.forEach(w=>{body+='- '+w.taak+' | Verantwoordelijke: '+w.verantwoordelijke+(w.deadline?' | Deadline: '+fmtDatum(w.deadline):'')+' | Status: '+w.status+'\n';});body+='\n';}
-  if(verslag.volgendePunten){body+='VOLGENDE STAPPEN\n'+verslag.volgendePunten+'\n';}
-  window.open('mailto:'+emails+'?subject='+encodeURIComponent('Verslag: '+verslag.vergaderingTitel+' - '+fmtDatum(verslag.datum))+'&body='+encodeURIComponent(body));
-}
- 
-function verwijderVerslag(id){if(confirm('Verslag verwijderen uit bibliotheek?')){db.verslagen=db.verslagen.filter(x=>x.id!==id);slaOp();renderBibliotheek();}}
- 
+
+function verwijderVerslag(id) { if (confirm('Verslag verwijderen?')) { db.verslagen = db.verslagen.filter(function(x) { return x.id !== id; }); bewaarDb(); renderBibliotheek(); } }
+
 // ===== WERKPUNTEN =====
-function renderWerkpunten(){
-  const cont=document.getElementById('werkpuntenLijst');
-  cont.innerHTML='';
-  let wps=[...db.werkpunten];
-  if(werkpuntFilter==='toebedeeld')wps=wps.filter(w=>w.status==='toebedeeld');
-  else if(werkpuntFilter==='progress')wps=wps.filter(w=>w.status==='progress');
-  else if(werkpuntFilter==='klaar')wps=wps.filter(w=>w.status==='klaar');
-  else if(werkpuntFilter==='verlopen')wps=wps.filter(w=>w.deadline&&w.deadline<vandaag()&&w.status!=='klaar');
-  wps.sort((a,b)=>{if(a.status==='klaar'&&b.status!=='klaar')return 1;if(b.status==='klaar'&&a.status!=='klaar')return-1;if(a.deadline&&b.deadline)return a.deadline.localeCompare(b.deadline);if(a.deadline)return-1;if(b.deadline)return 1;return 0;});
-  if(!wps.length){cont.innerHTML='<div class="empty"><i class="ti ti-checkbox" style="font-size:28px;display:block;margin-bottom:8px"></i>Geen werkpunten gevonden.</div>';return;}
-  wps.forEach(w=>{
-    const verlopen=w.deadline&&w.deadline<vandaag()&&w.status!=='klaar';
-    const dlKlasse=!w.deadline?'':w.status==='klaar'?'dl-ok':verlopen?'dl-verlopen':w.deadline<=new Date(Date.now()+3*86400000).toISOString().split('T')[0]?'dl-soon':'dl-ok';
-    const d=document.createElement('div');
-    d.className='werkpunt-card status-'+w.status+(verlopen?' status-verlopen':'');
-    d.innerHTML='<div class="werkpunt-header"><div class="werkpunt-tekst"><strong>'+w.taak+'</strong><div style="font-size:12px;color:#666;margin-top:3px"><i class="ti ti-building"></i> '+w.vergaderingTitel+'</div><div style="font-size:12px;color:#666;margin-top:1px"><i class="ti ti-user"></i> '+w.verantwoordelijke+'</div></div><div style="display:flex;flex-direction:column;gap:4px"><button class="icon-btn" onclick="verwijderWP(\''+w.id+'\')" title="Verwijder"><i class="ti ti-trash"></i></button></div></div><div class="werkpunt-meta"><select class="status-select" onchange="updateWPStatus(\''+w.id+'\',this.value)"><option value="toebedeeld"'+(w.status==='toebedeeld'?' selected':'')+'>Toebedeeld</option><option value="progress"'+(w.status==='progress'?' selected':'')+'>In progress</option><option value="klaar"'+(w.status==='klaar'?' selected':'')+'>✓ Klaar</option></select>'+(w.deadline?'<span class="deadline-badge '+dlKlasse+'"><i class="ti ti-calendar-due"></i> '+fmtDatum(w.deadline)+'</span>':'')+'<span class="badge badge-'+(w.prioriteit==='hoog'?'red':w.prioriteit==='laag'?'gray':'blue')+'">'+w.prioriteit+'</span>'+(verlopen?'<span class="badge badge-red">Verlopen!</span>':'')+'</div>';
+function renderWerkpunten() {
+  var cont = document.getElementById('wpLijst'); cont.innerHTML = '';
+  var wps = db.werkpunten.slice();
+  if (wpFilter === 'toebedeeld') wps = wps.filter(function(w) { return w.status === 'toebedeeld'; });
+  else if (wpFilter === 'progress') wps = wps.filter(function(w) { return w.status === 'progress'; });
+  else if (wpFilter === 'klaar') wps = wps.filter(function(w) { return w.status === 'klaar'; });
+  else if (wpFilter === 'verlopen') wps = wps.filter(function(w) { return w.deadline && w.deadline < vandaag() && w.status !== 'klaar'; });
+  wps.sort(function(a,b) {
+    if (a.status === 'klaar' && b.status !== 'klaar') return 1;
+    if (b.status === 'klaar' && a.status !== 'klaar') return -1;
+    if (a.deadline && b.deadline) return a.deadline.localeCompare(b.deadline);
+    if (a.deadline) return -1; if (b.deadline) return 1; return 0;
+  });
+  if (!wps.length) { cont.innerHTML = '<div class="empty"><i class="ti ti-checkbox" style="font-size:28px;display:block;margin-bottom:8px"></i>Geen werkpunten gevonden.</div>'; return; }
+  wps.forEach(function(w) {
+    var di = domInfo(w.domein || 'werk');
+    var verlopen = w.deadline && w.deadline < vandaag() && w.status !== 'klaar';
+    var dlK = !w.deadline ? '' : w.status === 'klaar' ? 'dl-ok' : verlopen ? 'dl-verlopen' : w.deadline <= new Date(Date.now()+3*86400000).toISOString().split('T')[0] ? 'dl-soon' : 'dl-ok';
+    var d = document.createElement('div');
+    d.className = 'werkpunt-card status-' + w.status + (verlopen ? ' status-verlopen' : '');
+    d.innerHTML = '<div class="werkpunt-header"><div class="werkpunt-tekst"><strong>' + w.taak + '</strong><div style="font-size:12px;color:#666;margin-top:3px"><span class="badge ' + di.badge + '" style="font-size:10px">' + di.label + '</span> ' + w.vergaderingTitel + '</div><div style="font-size:12px;color:#666;margin-top:1px"><i class="ti ti-user"></i> ' + w.verantwoordelijke + '</div></div><button class="icon-btn" onclick="verwijderWP(\'' + w.id + '\')"><i class="ti ti-trash"></i></button></div><div class="werkpunt-meta"><select class="status-select" onchange="updateWPStatus(\'' + w.id + '\',this.value)"><option value="toebedeeld"' + (w.status === 'toebedeeld' ? ' selected' : '') + '>Toebedeeld</option><option value="progress"' + (w.status === 'progress' ? ' selected' : '') + '>In progress</option><option value="klaar"' + (w.status === 'klaar' ? ' selected' : '') + '>Klaar</option></select>' + (w.deadline ? '<span class="deadline-badge ' + dlK + '"><i class="ti ti-calendar-due"></i> ' + fmtDatum(w.deadline) + '</span>' : '') + '<span class="badge badge-' + (w.prioriteit === 'hoog' ? 'red' : w.prioriteit === 'laag' ? 'gray' : 'blue') + '">' + w.prioriteit + '</span>' + (verlopen ? '<span class="badge badge-red">Verlopen!</span>' : '') + '</div>';
     cont.appendChild(d);
   });
 }
- 
-function filterWerkpunten(filter,btn){
-  werkpuntFilter=filter;
-  document.querySelectorAll('#page-werkpunten .btn').forEach(b=>{b.style.borderColor='';b.style.color='';});
-  btn.style.borderColor='#185FA5';btn.style.color='#185FA5';
+
+function setWPFilter(f, btn) {
+  wpFilter = f;
+  document.querySelectorAll('#page-werkpunten .btn').forEach(function(b) { b.style.borderColor = ''; b.style.color = ''; });
+  btn.style.borderColor = '#185FA5'; btn.style.color = '#185FA5';
   renderWerkpunten();
 }
- 
-function updateWPStatus(id,status){
-  const w=db.werkpunten.find(x=>String(x.id)===String(id));
-  if(!w)return;
-  w.status=status;
-  slaOp();
-  renderWerkpunten();
-  renderStats();
-  // Browser notificatie bij klaar
-  if(status==='klaar'&&'Notification' in window&&Notification.permission==='granted'){
-    new Notification('Werkpunt afgevinkt!',{body:w.taak,icon:'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="%23185FA5"/></svg>'});
+
+function updateWPStatus(id, status) {
+  var w = db.werkpunten.find(function(x) { return String(x.id) === String(id); }); if (!w) return;
+  w.status = status; bewaarDb(); renderWerkpunten(); renderMijnDag();
+  if (status === 'klaar' && 'Notification' in window && Notification.permission === 'granted') {
+    new Notification('Comtomeet', { body: 'Werkpunt klaar: ' + w.taak, icon: 'icon.svg' });
   }
 }
- 
-function verwijderWP(id){if(confirm('Werkpunt verwijderen?')){db.werkpunten=db.werkpunten.filter(x=>String(x.id)!==String(id));slaOp();renderWerkpunten();renderStats();}}
- 
-// ===== UITNODIGINGEN =====
-function vulUitnSelect(){const sel=document.getElementById('uitnVerg');sel.innerHTML='<option value="">— kies vergadering —</option>';[...db.vergaderingen].sort((a,b)=>b.datum.localeCompare(a.datum)).forEach(v=>{sel.innerHTML+='<option value="'+v.id+'">'+fmtDatum(v.datum)+' — '+v.titel+'</option>';});}
-function bouwUitnTekst(v){const agenda=v.agenda?v.agenda.split('\n').filter(Boolean).map((l,i)=>(i+1)+'. '+l).join('\n'):'';return'Uitnodiging vergadering: '+v.titel+'\n\nDatum: '+fmtDatum(v.datum)+'\nTijdstip: '+v.start+' - '+v.einde+'\nLocatie: '+(v.locatie||'nader te bepalen')+'\nOrganisator: '+(v.organisator||'')+'\n\nAgenda:\n'+(agenda||'zie uitnodiging')+'\n\nGraag bevestiging van aanwezigheid.\nMet vriendelijke groeten,\n'+(v.organisator||'');}
-function laadUitnVerg(){const id=parseInt(document.getElementById('uitnVerg').value),cont=document.getElementById('uitnContent');if(!id){cont.style.display='none';return;}const v=db.vergaderingen.find(x=>x.id===id);if(!v){cont.style.display='none';return;}cont.style.display='block';document.getElementById('uitnTitel').textContent=v.titel+' — '+fmtDatum(v.datum);document.getElementById('uitnPreview').textContent=bouwUitnTekst(v);const dd=document.getElementById('uitnDeelnemers');if(!v.deelnemers.length){dd.innerHTML='<div style="font-size:13px;color:#666">Geen deelnemers opgegeven</div>';return;}dd.innerHTML=v.deelnemers.map((naam,i)=>{const email=(v.emails||'').split(',').map(e=>e.trim())[i]||'';return'<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:0.5px solid #e5e5e5"><span style="font-size:14px">'+naam+(email?' <span style="font-size:12px;color:#666">('+email+')</span>':'')+'</span><div style="display:flex;gap:6px">'+(email?'<button class="icon-btn" onclick="stuurMail1(\''+email+'\','+v.id+')" title="E-mail"><i class="ti ti-mail"></i></button>':'')+'<button class="icon-btn" onclick="stuurWA1(\''+naam+'\','+v.id+')" title="WhatsApp"><i class="ti ti-brand-whatsapp"></i></button></div></div>';}).join('');}
-function stuurMailAllen(){const id=parseInt(document.getElementById('uitnVerg').value),v=db.vergaderingen.find(x=>x.id===id);if(!v)return;const emails=(v.emails||'').split(',').map(e=>e.trim()).filter(Boolean).join(',');window.open('mailto:'+emails+'?subject='+encodeURIComponent('Uitnodiging: '+v.titel)+'&body='+encodeURIComponent(bouwUitnTekst(v)));}
-function stuurMail1(email,id){const v=db.vergaderingen.find(x=>x.id===id);if(!v)return;window.open('mailto:'+email+'?subject='+encodeURIComponent('Uitnodiging: '+v.titel)+'&body='+encodeURIComponent(bouwUitnTekst(v)));}
-function stuurWAAllen(){const id=parseInt(document.getElementById('uitnVerg').value),v=db.vergaderingen.find(x=>x.id===id);if(!v)return;const agenda=v.agenda?v.agenda.split('\n').filter(Boolean).map((l,i)=>(i+1)+'. '+l).join('\n'):'';window.open('https://wa.me/?text='+encodeURIComponent('*Uitnodiging: '+v.titel+'*\n\n'+fmtDatum(v.datum)+' '+v.start+'-'+v.einde+'\n'+(v.locatie||'nader te bepalen')+'\n\nAgenda:\n'+(agenda||'zie uitnodiging')+'\n\nGraag uw bevestiging.'));}
-function stuurWA1(naam,id){const v=db.vergaderingen.find(x=>x.id===id);if(!v)return;const agenda=v.agenda?v.agenda.split('\n').filter(Boolean).map((l,i)=>(i+1)+'. '+l).join('\n'):'';window.open('https://wa.me/?text='+encodeURIComponent('Hallo '+naam+',\n\n*Uitnodiging: '+v.titel+'*\n'+fmtDatum(v.datum)+' '+v.start+'-'+v.einde+'\n'+(v.locatie||'nader te bepalen')+'\n\nAgenda:\n'+(agenda||'zie uitnodiging')+'\n\nGraag uw bevestiging.'));}
- 
-// Init + notificaties
-if('Notification' in window&&Notification.permission==='default'){
-  setTimeout(()=>Notification.requestPermission(),3000);
+
+function verwijderWP(id) {
+  if (confirm('Werkpunt verwijderen?')) { db.werkpunten = db.werkpunten.filter(function(x) { return String(x.id) !== String(id); }); bewaarDb(); renderWerkpunten(); }
 }
-// Dagelijkse deadline check
-setInterval(()=>{checkDeadlines();},60000);
- 
-renderLijst();
+
+// ===== INIT =====
+if ('Notification' in window && Notification.permission === 'default') {
+  setTimeout(function() { Notification.requestPermission(); }, 3000);
+}
+setInterval(function() {
+  if (document.getElementById('page-mijdag').classList.contains('active')) renderMijnDag();
+}, 60000);
+
+renderMijnDag();
 </script>
 </body>
 </html>
- 
