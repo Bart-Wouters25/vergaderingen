@@ -246,9 +246,18 @@ body{font-family:system-ui,sans-serif;font-size:15px;background:#f5f5f5;color:#1
   <div id="page-mijdag" class="page active">
     <div id="notifBanner" class="notif-banner"><i class="ti ti-bell"></i><span id="notifTekst"></span></div>
     <div id="dagHeader" class="dag-header"></div>
-    <button class="btn btn-primary btn-full" onclick="laadVanNotion()" style="margin-bottom:12px;font-size:13px">
-      <i class="ti ti-refresh"></i> Laad gedeelde activiteiten van team
-    </button>
+    <div style="display:flex;gap:8px;margin-bottom:12px">
+      <button class="btn btn-primary" onclick="laadVanNotion()" style="flex:1;font-size:13px;min-height:40px">
+        <i class="ti ti-refresh"></i> Laad via Notion
+      </button>
+      <button class="btn btn-success" onclick="exporteerAgenda()" style="flex:1;font-size:13px;min-height:40px">
+        <i class="ti ti-download"></i> Deel agenda
+      </button>
+      <label class="btn" style="flex:1;font-size:13px;min-height:40px;cursor:pointer;justify-content:center">
+        <i class="ti ti-upload"></i> Importeer
+        <input type="file" accept=".json" style="display:none" onchange="importeerAgenda(event)">
+      </label>
+    </div>
     <div class="domein-filter" id="dagFilterBar">
       <button class="domein-btn act-alle" onclick="setDagFilter('alle',this)">Alle</button>
       <button class="domein-btn" onclick="setDagFilter('werk',this)"><i class="ti ti-briefcase" style="font-size:12px"></i> Werk</button>
@@ -1016,6 +1025,92 @@ function updateWPStatus(id, status) {
 
 function verwijderWP(id) {
   if (confirm('Werkpunt verwijderen?')) { db.werkpunten = db.werkpunten.filter(function(x) { return String(x.id) !== String(id); }); bewaarDb(); renderWerkpunten(); }
+}
+
+// ===== EXPORT / IMPORT AGENDA =====
+function exporteerAgenda() {
+  var nu = new Date();
+  var vandaagStr = vandaag();
+  // Alleen aankomende activiteiten exporteren
+  var aankomend = db.vergaderingen.filter(function(v) { return v.datum >= vandaagStr; });
+  var exportData = {
+    type: 'comtomeet_agenda',
+    gedeeldDoor: localStorage.getItem('comtomeet_naam') || 'Onbekend',
+    gedeeldOp: nu.toISOString(),
+    activiteiten: aankomend.map(function(v) {
+      return {
+        titel: v.titel, datum: v.datum, start: v.start, einde: v.einde,
+        domein: v.domein, type: v.type, organisatie: v.organisatie || '',
+        locatie: v.locatie || '', organisator: v.organisator || '',
+        deelnemers: v.deelnemers || [], agenda: v.agenda || '',
+        vanNotion: false, gedeeld: true
+      };
+    })
+  };
+  var blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'comtomeet_agenda_' + vandaagStr + '.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+  // Ook WhatsApp deeloptie tonen
+  setTimeout(function() {
+    if (confirm('Agenda gedownload!
+
+Wil je ook een WhatsApp-bericht sturen met de link naar Comtomeet?')) {
+      var naam = localStorage.getItem('comtomeet_naam') || 'Je collega';
+      var tekst = 'Hallo!
+
+Ik deel mijn agenda via Comtomeet.
+
+1. Installeer de app: https://bart-wouters25.github.io/vergaderingen/vergadering-app.html
+2. Ik stuur je mijn agenda-bestand
+3. Open de app → Mijn dag → "Importeer"
+
+Groeten, ' + naam;
+      window.open('https://wa.me/?text=' + encodeURIComponent(tekst));
+    }
+  }, 500);
+}
+
+function importeerAgenda(event) {
+  var file = event.target.files[0]; if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      var data = JSON.parse(e.target.result);
+      if (!data.activiteiten) throw new Error('Ongeldig formaat');
+      var toegevoegd = 0;
+      data.activiteiten.forEach(function(a) {
+        // Controleer of activiteit al bestaat
+        var bestaat = db.vergaderingen.some(function(v) {
+          return v.titel === a.titel && v.datum === a.datum && v.start === a.start;
+        });
+        if (!bestaat) {
+          db.vergaderingen.push({
+            id: Date.now() + Math.random(),
+            titel: a.titel, datum: a.datum,
+            domein: a.domein || 'werk', type: a.type || 'vergadering',
+            organisatie: a.organisatie || '',
+            start: a.start || '09:00', einde: a.einde || '10:00',
+            locatie: a.locatie || '', organisator: a.organisator || '',
+            deelnemers: a.deelnemers || [], emails: '',
+            agenda: a.agenda || '',
+            notities: 'Gedeeld door: ' + (data.gedeeldDoor || 'collega'),
+            herinnering: '', gedeeldNotion: false, vanNotion: true
+          });
+          toegevoegd++;
+        }
+      });
+      bewaarDb();
+      alert(toegevoegd + ' activiteit' + (toegevoegd !== 1 ? 'en' : '') + ' toegevoegd van ' + (data.gedeeldDoor || 'collega') + '!');
+      renderMijnDag(); renderActiviteiten();
+    } catch(err) {
+      alert('Ongeldig bestand. Zorg dat het een Comtomeet agenda-bestand is.');
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
 }
 
 // ===== INIT =====
