@@ -512,7 +512,7 @@ function renderMijnDag() {
       return '<div class="wp-urgent ' + (verlopen ? 'verlopen' : 'soon') + '">' +
         '<div style="flex:1">' +
           '<div style="font-size:14px;font-weight:500">' + w.taak + '</div>' +
-          '<div style="font-size:12px;color:#666;margin-top:2px"><i class="ti ti-user" style="font-size:10px"></i> ' + w.verantwoordelijke + ' &nbsp;·&nbsp; <i class="ti ti-calendar-due" style="font-size:10px"></i> ' + fmtDatum(w.deadline) + (verlopen ? ' <span class="badge badge-red">Verlopen!</span>' : '') + '</div>' +
+          '<div style="font-size:12px;color:#666;margin-top:2px"><i class="ti ti-user" style="font-size:10px"></i> ' + w.verantwoordelijke + ' &nbsp;&middot;&nbsp; <i class="ti ti-calendar-due" style="font-size:10px"></i> ' + fmtDatum(w.deadline) + (verlopen ? ' <span class="badge badge-red">Verlopen!</span>' : '') + '</div>' +
         '</div>' +
         '<select class="status-select" onchange="updateWPStatus(\'' + w.id + '\',this.value)">' +
           '<option value="toebedeeld"' + (w.status === 'toebedeeld' ? ' selected' : '') + '>Toebedeeld</option>' +
@@ -945,7 +945,7 @@ function renderBibliotheek() {
 function openVerslagModal(verslag) {
   if (!verslag) return;
   var wps = db.werkpunten.filter(function(w) { return w.vergaderingId === verslag.vergaderingId; });
-  var html = '<div><h2 style="font-size:17px;font-weight:600;margin-bottom:4px">' + verslag.vergaderingTitel + '</h2><div style="font-size:13px;color:#666;margin-bottom:14px"><i class="ti ti-calendar"></i> ' + fmtDatum(verslag.datum) + (verslag.organisatie ? ' &nbsp;·&nbsp; ' + verslag.organisatie : '') + '</div>';
+  var html = '<div><h2 style="font-size:17px;font-weight:600;margin-bottom:4px">' + verslag.vergaderingTitel + '</h2><div style="font-size:13px;color:#666;margin-bottom:14px"><i class="ti ti-calendar"></i> ' + fmtDatum(verslag.datum) + (verslag.organisatie ? ' - ' + verslag.organisatie : '') + '</div>';
   html += '<div class="samenvatting-blok"><h3>Samenvatting</h3><p>' + verslag.samenvatting + '</p></div>';
   if (verslag.besprokenPunten && verslag.besprokenPunten.length) { html += '<div class="section-label">Besproken punten</div><ul style="padding-left:18px;font-size:14px;line-height:1.8">'; verslag.besprokenPunten.forEach(function(p) { html += '<li>' + p + '</li>'; }); html += '</ul>'; }
   if (verslag.beslissingen && verslag.beslissingen.length) { html += '<div class="section-label">Beslissingen</div><ul style="padding-left:18px;font-size:14px;line-height:1.8">'; verslag.beslissingen.forEach(function(b) { html += '<li>' + b + '</li>'; }); html += '</ul>'; }
@@ -1055,19 +1055,9 @@ function exporteerAgenda() {
   URL.revokeObjectURL(a.href);
   // Ook WhatsApp deeloptie tonen
   setTimeout(function() {
-    if (confirm('Agenda gedownload!
-
-Wil je ook een WhatsApp-bericht sturen met de link naar Comtomeet?')) {
+    if (confirm('Agenda gedownload! Wil je ook een WhatsApp-bericht sturen?')) {
       var naam = localStorage.getItem('comtomeet_naam') || 'Je collega';
-      var tekst = 'Hallo!
-
-Ik deel mijn agenda via Comtomeet.
-
-1. Installeer de app: https://bart-wouters25.github.io/vergaderingen/vergadering-app.html
-2. Ik stuur je mijn agenda-bestand
-3. Open de app → Mijn dag → "Importeer"
-
-Groeten, ' + naam;
+      var tekst = 'Installeer Comtomeet: https://bart-wouters25.github.io/vergaderingen/vergadering-app.html - Dan stuur ik je mijn agenda. Groeten, ' + naam;
       window.open('https://wa.me/?text=' + encodeURIComponent(tekst));
     }
   }, 500);
