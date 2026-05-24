@@ -1,7 +1,7 @@
 {
-  "name": "Tomeeto",
-  "short_name": "Tomeeto",
-  "description": "Tomeeto - App voor het organiseren van vergaderingen",
+  "name": "Comtomeet",
+  "short_name": "Comtomeet",
+  "description": "Comtomeet - Jouw persoonlijke activiteitencentrale",
   "start_url": "/vergaderingen/vergadering-app.html",
   "display": "standalone",
   "background_color": "#185FA5",
